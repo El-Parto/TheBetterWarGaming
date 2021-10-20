@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6069387929250154321}
   - component: {fileID: 5169352466067601727}
   m_Layer: 0
-  m_Name: Cappy
+  m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

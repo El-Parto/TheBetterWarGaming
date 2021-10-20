@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
     public float travelSpeed;
 
     public GameObject turret;
+    //private GameObject kaboom; // this is for the explosion effect to be instantiated when the bullet destroys itself.
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +23,9 @@ public class Bullet : MonoBehaviour
 
     public IEnumerator BeABullet()
     {
-        //gameObject.transform.SetParent(null, false);
+        gameObject.transform.SetParent(null);
             //gameObject.transform.rotation = new Quaternion(0, turret.transform.localRotation.y, 0, 0);
-        gameObject.transform.position+= Vector3.right * travelSpeed * Time.deltaTime;
+        gameObject.transform.Translate( 0, travelSpeed * Time.deltaTime,0);
         
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
