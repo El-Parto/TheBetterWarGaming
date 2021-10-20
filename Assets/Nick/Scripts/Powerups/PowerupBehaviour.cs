@@ -3,12 +3,13 @@ using UnityEngine;
 public class PowerupBehaviour : MonoBehaviour
 {
     [SerializeField] Powerup powerup;
-    
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             powerup.Start();
+            GameObject.Find("Powerups").GetComponent<PowerupSpawner>().isActive = false;
             Destroy(gameObject);
         }
     }

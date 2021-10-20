@@ -8,11 +8,16 @@ public class PowerupSpawner : MonoBehaviour
     [SerializeField] List<Transform> points = new List<Transform>();
     [Tooltip("The duration before another powerup is spawned")]
     [SerializeField] float delay;
+    public bool isActive;
     float timer;
     int powerIndex;
     int pointIndex;
 
-    void Update() => Timer();
+    void Update()
+    {
+        if (isActive) return;
+        Timer();
+    }
 
     // a powerup is spawned every few seconds
     void Timer()
@@ -40,6 +45,7 @@ public class PowerupSpawner : MonoBehaviour
         a.transform.position = points[pointIndex].position;
         var b = a.GetComponent<PowerupBehaviour>();
         b.SetPowerup(powerups[Random.Range(0, powerups.Count)]);
+        isActive = true;
     }
 
 

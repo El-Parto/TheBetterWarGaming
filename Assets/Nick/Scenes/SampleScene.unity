@@ -177,22 +177,6 @@ MonoBehaviour:
   rotateLeft: 113
   rotateRight: 101
   shoot: 32
---- !u!114 &482876864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482876862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e69108be03144541af4d02a5828381d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasFlamethrower: 0
-  usePower: 9
-  flamethrower: {fileID: 3626280632859513947, guid: 62d8b35fe973b264cb7350bafa0c5024, type: 3}
-  firePoint: {fileID: 1425995864}
 --- !u!54 &482876865
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -457,11 +441,6 @@ Transform:
 --- !u!1 &1425995860 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6921980183233638103, guid: aa5130e1d86ded242a13912c512b9db2, type: 3}
-  m_PrefabInstance: {fileID: 1355096860}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1425995864 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6921980183233638100, guid: aa5130e1d86ded242a13912c512b9db2, type: 3}
   m_PrefabInstance: {fileID: 1355096860}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1569326470
