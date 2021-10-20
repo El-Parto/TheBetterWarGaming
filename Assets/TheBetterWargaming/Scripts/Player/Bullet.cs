@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float travelSpeed;
+    public float travelSpeed;// currently set to 1.46f
 
-    public GameObject turret;
+    public Transform turret; // the game object that it will be fired from. or supposed to.
     //private GameObject kaboom; // this is for the explosion effect to be instantiated when the bullet destroys itself.
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameObject.transform.position += new Vector3(0.055f,0,0);
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
     {
         gameObject.transform.SetParent(null);
             //gameObject.transform.rotation = new Quaternion(0, turret.transform.localRotation.y, 0, 0);
-        gameObject.transform.Translate( 0, travelSpeed * Time.deltaTime,0);
+        gameObject.transform.Translate( travelSpeed * Time.deltaTime, 0, 0/*,turret.transform*/);
         
         yield return new WaitForSeconds(3);
         Destroy(gameObject);

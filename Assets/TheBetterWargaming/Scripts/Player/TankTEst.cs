@@ -8,9 +8,12 @@ public class TankTEst : MonoBehaviour
     public float tankSpeed; // with current scale in mind, current speed = 0.01f
     public float rotateSpeed; // current rotate speed is 1.45f;
 
-    [SerializeField]private GameObject bulletPrefab;
+    [SerializeField]private GameObject bulletPrefab; // object instantiated when firing
 
-    public GameObject turret;
+    public GameObject turret;// object that is rotated via play control
+
+    public Transform cannon;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +47,7 @@ public class TankTEst : MonoBehaviour
     private void Shoot()
     {
         if(Input.GetKeyDown(KeyCode.Space))
-            Instantiate(bulletPrefab, turret.transform, false);
+            Instantiate(bulletPrefab, cannon, false);
         
     }
 
