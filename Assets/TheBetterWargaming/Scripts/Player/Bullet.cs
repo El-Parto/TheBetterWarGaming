@@ -30,6 +30,14 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
+
+    private void Richochet()
+    {
+        //you take your aim, 
+        // fire away, fire awayyyy.
+        //RaycastHit wallBounce = Physics.Raycast()
+        
+    }
     
     
 }
