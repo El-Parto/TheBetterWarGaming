@@ -5,8 +5,8 @@ using UnityEngine;
 public class TankTEst : MonoBehaviour
 {
 
-    public float tankSpeed;
-    public float rotateSpeed;
+    public float tankSpeed; // with current scale in mind, current speed = 0.01f
+    public float rotateSpeed; // current rotate speed is 1.45f;
 
     [SerializeField]private GameObject bulletPrefab;
 
@@ -25,12 +25,12 @@ public class TankTEst : MonoBehaviour
         Shoot();
     }
 
-
+///<summary> Moves tank in the specified direction via moving position with GetAxis. </summary>
     private void MoveTank()
     {
         gameObject.transform.position += new Vector3(tankSpeed * (Input.GetAxis("Horizontal")), 0, tankSpeed * (Input.GetAxis("Vertical")));
     }
-
+    ///<summary> Rotates the turret Clockwise or Counter Clockwise depending on if Q or E is pressed down. </summary>///
     private void RotateTurret()
     {
         if(Input.GetKeyDown(KeyCode.Q)||Input.GetKey(KeyCode.Q))
@@ -38,7 +38,9 @@ public class TankTEst : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)|| Input.GetKey(KeyCode.E))
             turret.transform.Rotate(0,rotateSpeed,0);
     }
-
+/// <summary>
+/// When the player presses space, shoot the designated bullet prefab
+/// </summary>
     private void Shoot()
     {
         if(Input.GetKeyDown(KeyCode.Space))
