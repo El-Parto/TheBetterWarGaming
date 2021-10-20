@@ -20,18 +20,18 @@ public class Tank : MonoBehaviour
         Shoot();
     }
 
-    private void MoveTank()
+    void MoveTank()
     {
         gameObject.transform.position += new Vector3(speed * (Input.GetAxis("Horizontal")), 0, speed * (Input.GetAxis("Vertical")));
     }
 
-    private void RotateTurret()
+    void RotateTurret()
     {
         if(Input.GetKey(rotateLeft)) turret.transform.Rotate(0, rotateSpeed * -1, 0);
         if(Input.GetKey(rotateRight)) turret.transform.Rotate(0, rotateSpeed, 0);
     }
 
-    private void Shoot()
+    void Shoot()
     {
         if(Input.GetKeyDown(shoot)) Instantiate(bulletPrefab, turret.transform, false);      
     }

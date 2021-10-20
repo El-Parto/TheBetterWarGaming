@@ -6,6 +6,7 @@ public class PowerupActions : MonoBehaviour
     [SerializeField] float speedBoost;
     [SerializeField] float duration;
 
+    #region Powerups
     public void StartSpeedBoost()
     {
         tank.speed += speedBoost;
@@ -16,4 +17,6 @@ public class PowerupActions : MonoBehaviour
     {
         tank.speed -= speedBoost;
     }
+
+    #endregion
 }
