@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class PowerupBehaviour : MonoBehaviour
+namespace Powerup
 {
-    [SerializeField] Powerup powerup;
-
-    void OnTriggerEnter(Collider other)
+    public class PowerupBehaviour : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        [SerializeField] Powerup powerup;
+
+        void OnTriggerEnter(Collider other)
         {
-            powerup.Start();
-            GameObject.Find("Powerups").GetComponent<PowerupSpawner>().isActive = false;
-            Destroy(gameObject);
+            if (other.CompareTag("Player"))
+            {
+                powerup.Start();
+                GameObject.Find("Powerups").GetComponent<PowerupSpawner>().isActive = false;
+                Destroy(gameObject);
+            }
         }
-    }
 
-    public void SetPowerup(Powerup _powerup)
-    {
-        powerup = _powerup;
-        gameObject.name = powerup.name;
-    }
+        public void SetPowerup(Powerup _powerup)
+        {
+            powerup = _powerup;
+            gameObject.name = powerup.name;
+        }
+    } 
 }

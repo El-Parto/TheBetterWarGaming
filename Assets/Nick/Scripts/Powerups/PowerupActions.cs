@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class PowerupActions : MonoBehaviour
+namespace Powerup
 {
-    [SerializeField] Tank tank;
-    [SerializeField] float speedBoost;
-    [SerializeField] float duration;
-
-    #region Powerups
-    public void StartSpeedBoost()
+    public class PowerupActions : MonoBehaviour
     {
-        tank.speed += speedBoost;
-        Invoke("StopSpeedBoost", duration);
-    }
+        [SerializeField] Tank tank;
+        [SerializeField] float speedBoost;
+        [SerializeField] float duration;
 
-    public void StopSpeedBoost()
-    {
-        tank.speed -= speedBoost;
-    }
+        #region Powerups
+        public void StartSpeedBoost()
+        {
+            tank.speed += speedBoost;
+            Invoke("StopSpeedBoost", duration);
+        }
 
-    #endregion
+        public void StopSpeedBoost()
+        {
+            tank.speed -= speedBoost;
+        }
+
+        #endregion
+    } 
 }
