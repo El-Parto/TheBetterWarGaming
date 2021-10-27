@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1195685840062039552}
   - component: {fileID: 622075753465339206}
+  - component: {fileID: 4325105418206224498}
+  - component: {fileID: 6487594589657997834}
   m_Layer: 0
   m_Name: BulletAshley
   m_TagString: Untagged
@@ -46,6 +48,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   travelSpeed: 1.46
   turret: {fileID: 6921980181616448881, guid: aa5130e1d86ded242a13912c512b9db2, type: 3}
+--- !u!54 &4325105418206224498
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566346230363702630}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 10.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
+--- !u!65 &6487594589657997834
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566346230363702630}
+  m_Material: {fileID: 13400000, guid: 43ac497a40cb4a941ac884c1b1487933, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5709003, y: 0.2093206, z: 0.24501482}
+  m_Center: {x: -0.033708617, y: -0.0296603, z: 0.000058457255}
 --- !u!1001 &5668860660621598112
 PrefabInstance:
   m_ObjectHideFlags: 0

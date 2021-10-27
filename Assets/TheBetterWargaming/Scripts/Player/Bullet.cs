@@ -8,11 +8,18 @@ public class Bullet : MonoBehaviour
 
     public Transform turret; // the game object that it will be fired from. or supposed to.
     //private GameObject kaboom; // this is for the explosion effect to be instantiated when the bullet destroys itself.
+
+    private Rigidbody brb;
     
     // Start is called before the first frame update
     void Start()
     {
+        // so the bullet appears at the cannon. OR is supposed to.
         gameObject.transform.position += new Vector3(0.055f,0,0);
+
+        brb = GetComponent<Rigidbody>();
+        
+
     }
 
     // Update is called once per frame
@@ -37,7 +44,10 @@ public class Bullet : MonoBehaviour
         // fire away, fire awayyyy.
         //RaycastHit wallBounce = Physics.Raycast()
         
+        
     }
+    
+    
     
     
 }
