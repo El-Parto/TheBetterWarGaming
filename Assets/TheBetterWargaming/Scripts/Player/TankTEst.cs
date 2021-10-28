@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TankTEst : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class TankTEst : MonoBehaviour
     public GameObject turret;// object that is rotated via play control
 
     public Transform cannon;
+
+    public float health = 100;
+
+    public Slider healthSlider;
   
     // Start is called before the first frame update
     void Start()
@@ -50,5 +55,13 @@ public class TankTEst : MonoBehaviour
             Instantiate(bulletPrefab, cannon, false);
         
     }
+
+    public void Damage()
+    {
+        // this would go into a on collision method
+        
+        
+    }
+
 
 }
