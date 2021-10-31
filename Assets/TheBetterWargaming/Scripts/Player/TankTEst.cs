@@ -30,7 +30,7 @@ public class TankTEst : MonoBehaviour
     {
         MoveTank();
         RotateTurret();
-        Shoot();
+       // Shoot();
     }
 
 ///<summary> Moves tank in the specified direction via moving position with GetAxis. </summary>
@@ -47,14 +47,14 @@ public class TankTEst : MonoBehaviour
             turret.transform.Rotate(0,rotateSpeed,0);
     }
 /// <summary>
-/// When the player presses space, shoot the designated bullet prefab
+/// When the player presses space, shoot the designated bullet prefab. Now handled on the Network Tank. or Networkplayer.
 /// </summary>
-    private void Shoot()
+    /*private void Shoot()
     {
         if(Input.GetKeyDown(KeyCode.Space))
             Instantiate(bulletPrefab, cannon, false);
         
-    }
+    }*/
 
     public void Damage()
     {
