@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 
 using System;
+using System.Security.Cryptography;
 
 [RequireComponent(typeof(Bullet))]
 public class NetworkBullet : NetworkBehaviour 
@@ -25,5 +26,14 @@ public class NetworkBullet : NetworkBehaviour
     {
         
     }
-    
+
+    [ServerCallback]
+    public void OnCollisionEnter(Collision other)
+    {
+	    if(other.collider.CompareTag("Wall") ||(other.collider.CompareTag("Player")))
+	    {
+		    Destroy(gameObject);
+	    }
+	    
+    }
 }

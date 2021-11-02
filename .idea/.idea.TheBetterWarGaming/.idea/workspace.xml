@@ -42,10 +42,10 @@
       <option value="$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/Networking/NetworkPlayer.cs" />
       <option value="$PROJECT_DIR$/Assets/Mirror/Runtime/NetworkManager.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" />
-      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkBullet.cs" />
-      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkBullet.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1zj8uVQ3lRc3D5ZtqaLoabNAgQz" />
@@ -103,7 +103,7 @@
       <workItem from="1634688224154" duration="6987000" />
       <workItem from="1635289948546" duration="6853000" />
       <workItem from="1635585423512" duration="6487000" />
-      <workItem from="1635841214220" duration="14187000" />
+      <workItem from="1635841214220" duration="15680000" />
     </task>
     <servers />
   </component>
