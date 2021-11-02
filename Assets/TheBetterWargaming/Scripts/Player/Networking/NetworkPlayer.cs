@@ -3,15 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+using System;
+
 [RequireComponent(typeof(TankTEst))]
 public class NetworkPlayer : NetworkBehaviour
 {
     //SyncVar
     public GameObject bulletPrefab;
+    public Transform cannon;
     
     // Start is called before the first frame update
     void Start()
     {
+        cannon = GetComponentInChildren<Turret>().gameObject.transform;
+
+    }
+
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            CmdFireBulletPrefab();            
+        }
         
     }
 
@@ -22,13 +35,14 @@ public class NetworkPlayer : NetworkBehaviour
     /// </summary>
     public void GetPlayerRef()
     {
-        TankTEst playerTank = gameObject.GetComponent<TankTEst>();
-        playerTank.enabled = isLocalPlayer;
+
     }
 
     public override void OnStartClient()
     {
         GetPlayerRef();
+        TankTEst playerTank = gameObject.GetComponent<TankTEst>();
+        playerTank.enabled = isLocalPlayer;
         // if we used Custom netowrk manager
         // Add player here.
     }
@@ -38,15 +52,27 @@ public class NetworkPlayer : NetworkBehaviour
     {
         // remove player here.
     }*/
-    
-    
-    
 
-    public void FireBulletPrefab()
+
+    [Command]
+    public void CmdFireBulletPrefab()
     {
-        GameObject newBullet = (Instantiate(bulletPrefab));
+        RpcFireBulletPrefab();
+    }
+
+    
+    [ClientRpc]
+    public void RpcFireBulletPrefab()
+    {
+
         if(Input.GetKeyDown(KeyCode.Space))
-            Instantiate(bulletPrefab, cannon, false);
+        {
+            GameObject newBullet = (Instantiate(bulletPrefab, cannon));
+            NetworkServer.Spawn(newBullet);
+            newBullet.transform.SetParent(null, true);
+        }
+            
+        
 
     }
 

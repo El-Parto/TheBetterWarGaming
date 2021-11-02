@@ -21,13 +21,15 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/NetworkPlayer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/Networking/NetworkPlayer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/CustomNetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/PlayerController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/CustomNetworkManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/HealthUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/CustomNetworkManager1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/82EC470C-9131-4935-8AD0-C83AD628910C/bd/7d7264a6/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkBullet.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -35,13 +37,15 @@
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Test2.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/TankTEst.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Bullet.cs" />
-      <option value="$PROJECT_DIR$/Assets/Mirror/Runtime/NetworkManager.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/CustomNetworkManager1.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/HealthUI.cs" />
       <option value="$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/Networking/NetworkPlayer.cs" />
-      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Mirror/Runtime/NetworkManager.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkBullet.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1zj8uVQ3lRc3D5ZtqaLoabNAgQz" />
@@ -99,6 +103,7 @@
       <workItem from="1634688224154" duration="6987000" />
       <workItem from="1635289948546" duration="6853000" />
       <workItem from="1635585423512" duration="6487000" />
+      <workItem from="1635841214220" duration="8227000" />
     </task>
     <servers />
   </component>

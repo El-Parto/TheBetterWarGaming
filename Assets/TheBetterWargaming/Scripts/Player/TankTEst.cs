@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class TankTEst : MonoBehaviour
 {
 
-    public float tankSpeed; // with current scale in mind, current speed = 0.01f
-    public float rotateSpeed; // current rotate speed is 1.45f;
+    public float tankSpeed = 0.11f; // with current scale in mind, current speed = 0.01f
+    public float rotateSpeed = 1.45f; // current rotate speed is 1.45f;
 
     [SerializeField]private GameObject bulletPrefab; // object instantiated when firing
 
@@ -30,7 +30,7 @@ public class TankTEst : MonoBehaviour
     {
         MoveTank();
         RotateTurret();
-       // Shoot();
+        //Shoot();
     }
 
 ///<summary> Moves tank in the specified direction via moving position with GetAxis. </summary>
@@ -49,12 +49,12 @@ public class TankTEst : MonoBehaviour
 /// <summary>
 /// When the player presses space, shoot the designated bullet prefab. Now handled on the Network Tank. or Networkplayer.
 /// </summary>
-    /*private void Shoot()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-            Instantiate(bulletPrefab, cannon, false);
-        
-    }*/
+    // private void Shoot()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.Space))
+    //         Instantiate(bulletPrefab, cannon, false);
+    //     
+    // }
 
     public void Damage()
     {
