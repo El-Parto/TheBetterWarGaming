@@ -1,6 +1,7 @@
 using UnityEngine;
+using Mirror;
 
-public class Tank : MonoBehaviour
+public class Tank : NetworkBehaviour
 {
     [Header("Attributes")]
     public float speed;
@@ -15,6 +16,8 @@ public class Tank : MonoBehaviour
 
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         MoveTank();
         RotateTurret();
         Shoot();

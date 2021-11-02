@@ -19,6 +19,7 @@ namespace Networking
         public static void AddPlayer(NetworkPlayer _player) => instance.players.Add(_player.netId, _player);
         public static void RemovePlayer(NetworkPlayer _player) => instance.players.Remove(_player.netId);
 
+
         public static NetworkPlayer LocalPlayer
         {
             get

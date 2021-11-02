@@ -1,16 +1,21 @@
 using UnityEngine;
+using Mirror;
 
 namespace Powerup
 {
-    public class PowerupActions : MonoBehaviour
+    public class PowerupActions : NetworkBehaviour
     {
-        [SerializeField] Tank tank;
+        Tank tank;
         [SerializeField] float speedBoost;
         [SerializeField] float duration;
 
-        #region Powerups
+        private void Awake() => tank = GetComponent<Tank>();
+
+        #region Powerups       
         public void StartSpeedBoost()
         {
+            if (!isLocalPlayer) return;
+
             tank.speed += speedBoost;
             Invoke("StopSpeedBoost", duration);
         }

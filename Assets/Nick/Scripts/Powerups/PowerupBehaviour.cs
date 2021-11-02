@@ -1,11 +1,13 @@
 using UnityEngine;
+using Mirror;
 
 namespace Powerup
 {
-    public class PowerupBehaviour : MonoBehaviour
+    public class PowerupBehaviour : NetworkBehaviour
     {
         [SerializeField] Powerup powerup;
 
+        [ServerCallback]
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))

@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Mirror;
 
 namespace Powerup
 {
-    public class PowerupSpawner : MonoBehaviour
+    public class PowerupSpawner : NetworkBehaviour
     {
         [SerializeField] List<Powerup> powerups;
         [SerializeField] List<GameObject> powers = new List<GameObject>();
@@ -22,6 +23,7 @@ namespace Powerup
         }
 
         // a powerup is spawned every few seconds
+        [ServerCallback]
         void Timer()
         {
             if (timer > delay)
@@ -34,13 +36,17 @@ namespace Powerup
             else timer += Time.deltaTime;
         }
 
+
         // chooses random spawnpoint from list
+        [ServerCallback]
         void ChooseRandomPoint() => pointIndex = Random.Range(0, points.Count);
 
         // chooses random powerup from list
+        [ServerCallback]
         void ChooseRandomPower() => powerIndex = Random.Range(0, powers.Count);
 
         // spawns random powerup at random spawnpoint
+        [ServerCallback]
         void SpawnRandomPower()
         {
             GameObject a = Instantiate(powers[powerIndex], transform);

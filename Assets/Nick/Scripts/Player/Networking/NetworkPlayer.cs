@@ -45,8 +45,8 @@ public class NetworkPlayer : NetworkBehaviour
     public void FireBulletPrefab()
     {
         GameObject newBullet = (Instantiate(bulletPrefab));
-        if(Input.GetKeyDown(KeyCode.Space))
-            Instantiate(bulletPrefab, cannon, false);
+        if (Input.GetKeyDown(KeyCode.Space)) { }
+            //Instantiate(bulletPrefab, cannon, false);
 
     }
 
