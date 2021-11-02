@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Nick/Scenes/Lobby.unity
-    guid: c3215c2d24fcc2640ae9dac89b382374
+    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/OfflineTest.unity
+    guid: d623d55f4958000459b1e3d147002fe7
   - enabled: 1
-    path: Assets/Nick/Scenes/NickScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/OnlineTest.unity
+    guid: ad71288c9d8af4b4da3958b67b15902b
   m_configObjects: {}
