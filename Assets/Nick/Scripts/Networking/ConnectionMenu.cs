@@ -21,7 +21,8 @@ namespace Networking
 
         void Awake()
         {
-            networkManager = CustomNetworkManager.instance;
+            //networkManager = CustomNetworkManager.instance;
+            networkManager = GetComponent<CustomNetworkManager>();
             transport = Transport.activeTransport as KcpTransport;
 
             // adds functionality to the buttons

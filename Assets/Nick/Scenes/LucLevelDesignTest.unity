@@ -1913,6 +1913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567934292}
   - component: {fileID: 567934291}
+  - component: {fileID: 567934293}
   m_Layer: 0
   m_Name: tank
   m_TagString: Untagged
@@ -1932,10 +1933,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a795060bba19384387a8abbc8fdb4c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankSpeed: 0.01
+  speed: 0
   rotateSpeed: 1.45
   bulletPrefab: {fileID: 2437158684299472644, guid: cbc76cbb89ec0cc4ca05265781ef67cb, type: 3}
   turret: {fileID: 758906335}
+  rotateLeft: 0
+  rotateRight: 0
+  shoot: 0
 --- !u!4 &567934292
 Transform:
   m_ObjectHideFlags: 0
@@ -1952,6 +1956,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &567934293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567934290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 3745309092
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &581025397
 GameObject:
   m_ObjectHideFlags: 0
