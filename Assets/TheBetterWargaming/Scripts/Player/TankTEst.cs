@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TankTEst : MonoBehaviour
 {
 
-    public float tankSpeed = 0.11f; // with current scale in mind, current speed = 0.01f
+    public float tankSpeed = 0.007f; // with current scale in mind, current speed = 0.01f
     public float rotateSpeed = 1.45f; // current rotate speed is 1.45f;
 
     [SerializeField]private GameObject bulletPrefab; // object instantiated when firing
@@ -16,13 +18,14 @@ public class TankTEst : MonoBehaviour
     public Transform cannon;
 
     public float health = 100;
-
     public Slider healthSlider;
+
+    public Rigidbody rb;
   
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame

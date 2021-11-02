@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 7145768897330830858}
   m_Layer: 0
   m_Name: BulletAshley
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1566346230363702630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 5, z: 5}
   m_Children:
   - {fileID: 5269615914175969867}
   m_Father: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe63558f2b0dac040a1c554878c7cc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelSpeed: 1.46
+  travelSpeed: 3.46
   turret: {fileID: 1168583393837005503, guid: 2387a2acb3acf3347b440892c21c6f1a, type: 3}
 --- !u!54 &4325105418206224498
 Rigidbody:
@@ -256,8 +256,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ccf8963d57cc1874990a2fc1a03c141f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: db995539300603c47b6f16bfd6c93494, type: 2}
     - target: {fileID: 919132149155446097, guid: ccf8963d57cc1874990a2fc1a03c141f, type: 3}
       propertyPath: m_Name
+      value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ccf8963d57cc1874990a2fc1a03c141f, type: 3}
+      propertyPath: m_TagString
       value: Bullet
       objectReference: {fileID: 0}
     m_RemovedComponents: []

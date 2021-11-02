@@ -50,13 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a795060bba19384387a8abbc8fdb4c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankSpeed: 0.11
+  tankSpeed: 0.007
   rotateSpeed: 1.45
   bulletPrefab: {fileID: 1566346230363702630, guid: a2eeb5e9c48cd8e4c9f5be646551e87d, type: 3}
   turret: {fileID: 3257594837042743409}
   cannon: {fileID: 3257594838409146557}
   health: 100
   healthSlider: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!54 &3257594836856228091
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -71,7 +72,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &7989972221915802505
 MonoBehaviour:
@@ -106,6 +107,8 @@ MonoBehaviour:
   syncInterval: 0.1
   bulletPrefab: {fileID: 1566346230363702630, guid: a2eeb5e9c48cd8e4c9f5be646551e87d, type: 3}
   cannon: {fileID: 3257594838409146557}
+  ammo: 3
+  ammoTimer: 3
 --- !u!114 &587306334819070533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,13 +285,13 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3992926130080871873
+--- !u!114 &7848868499647281917
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3257594837042743409}
+  m_GameObject: {fileID: 3257594838409146556}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcc1615818309074abb2f37d76425e96, type: 3}
@@ -307,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1168583393055769167, guid: 2387a2acb3acf3347b440892c21c6f1a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.12
+      value: 2.51
       objectReference: {fileID: 0}
     - target: {fileID: 1168583393055769167, guid: 2387a2acb3acf3347b440892c21c6f1a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -387,6 +390,11 @@ GameObject:
 --- !u!4 &3257594837042743373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1168583393837005503, guid: 2387a2acb3acf3347b440892c21c6f1a, type: 3}
+  m_PrefabInstance: {fileID: 4396332756540814066}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3257594838409146556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1168583393055769166, guid: 2387a2acb3acf3347b440892c21c6f1a, type: 3}
   m_PrefabInstance: {fileID: 4396332756540814066}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3257594838409146557 stripped
