@@ -47,13 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a795060bba19384387a8abbc8fdb4c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   speed: 0
   rotateSpeed: 1.45
   bulletPrefab: {fileID: 1566346230363702630, guid: a2eeb5e9c48cd8e4c9f5be646551e87d, type: 3}
   turret: {fileID: 4687772579796071158}
-  rotateLeft: 0
-  rotateRight: 0
-  shoot: 0
+  rotateLeft: 113
+  rotateRight: 101
+  shoot: 32
 --- !u!54 &4687772579592516220
 Rigidbody:
   m_ObjectHideFlags: 0
