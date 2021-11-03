@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-
-using System;
 
 [RequireComponent(typeof(Tank))]
 public class NetworkPlayer : NetworkBehaviour
@@ -14,15 +10,9 @@ public class NetworkPlayer : NetworkBehaviour
     [SyncVar] public int ammo = 3;
     [SyncVar] public float ammoTimer = 3;
     //[SyncVar] public bool noAmmo = false;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        cannon = GetComponentInChildren<Turret>().gameObject.transform;
 
-    }
+    void Start() => cannon = GetComponentInChildren<Turret>().gameObject.transform;
 
-    
     public void Update()
     {
         if(isLocalPlayer)
@@ -31,25 +21,18 @@ public class NetworkPlayer : NetworkBehaviour
             {
                 {
                     ammo -= 1;
-                    CmdFireBulletPrefab();
-                    
+                    CmdFireBulletPrefab();              
                 }
             }
         }
         AmmoTeller();
-
-
     }
 
-    
-
-    /// <summary>
-    /// Gets the player reference so that it may be spawned in correctly with it's component.
-    /// </summary>
+    /// <summary> Gets the player reference so that it may be spawned in correctly with it's component. </summary>
     public override void OnStartClient()
     {
         //GetPlayerRef();
-        TankTEst playerTank = gameObject.GetComponent<TankTEst>();
+        Tank playerTank = gameObject.GetComponent<Tank>();
         playerTank.enabled = isLocalPlayer;
         // if we used Custom netowrk manager
         // Add player here.
@@ -60,7 +43,6 @@ public class NetworkPlayer : NetworkBehaviour
     {
         // remove player here.
     }*/
-
 
     [Command]
     public void CmdFireBulletPrefab()
@@ -82,31 +64,18 @@ public class NetworkPlayer : NetworkBehaviour
         if(other.collider.CompareTag("DeathZone"))
         {
             gameObject.transform.position = new Vector3(0, 3, 0);
-        }
-        
+        }      
     }
     [ClientRpc]
-    public void RpcFireBulletPrefab(GameObject _bullet)
-    {
-        _bullet.transform.SetParent(null, true);
-        
-       
-            
-        
+    public void RpcFireBulletPrefab(GameObject _bullet) => _bullet.transform.SetParent(null, true);
 
-    }
-/// <summary>
-/// When ammo is 0, count down the timer , once timer is 0, reset ammo and timer values.
-/// </summary>
+    /// <summary> When ammo is 0, count down the timer , once timer is 0, reset ammo and timer values. </summary>
     public void AmmoTeller()
-    {
-        
+    {      
         if(ammo == 0)
         {
-
             ammoTimer -= 1 * Time.deltaTime; 
-            Debug.Log($"timer = {ammoTimer}");
-            
+            Debug.Log($"timer = {ammoTimer}");          
         }
 
         if(ammoTimer <= 0)
@@ -115,10 +84,6 @@ public class NetworkPlayer : NetworkBehaviour
             ammoTimer = 3;
             Debug.Log("Ammo refilled");
         }
-        
-        
-
-
     }
 
 /*
@@ -134,5 +99,4 @@ public class NetworkPlayer : NetworkBehaviour
         
     }
 */
-
-    }
+}

@@ -1,34 +1,22 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float travelSpeed = 3.46f;// currently set to 1.46f
-
     public Transform turret; // the game object that it will be fired from. or supposed to.
     //private GameObject kaboom; // this is for the explosion effect to be instantiated when the bullet destroys itself.
+    Rigidbody brb;
+    Tank tank;
 
-    private Rigidbody brb;
-    private Tank tank;
-
-    // Start is called before the first frame update
     void Start()
     {
         // so the bullet appears at the cannon. OR is supposed to.
         gameObject.transform.position += new Vector3(0.055f, 0, 0);
-
         brb = GetComponent<Rigidbody>();
-
-
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        StartCoroutine(BeABullet());
-    }
+    void Update() => StartCoroutine(BeABullet());
 
     public IEnumerator BeABullet()
     {
@@ -45,13 +33,11 @@ public class Bullet : MonoBehaviour
         //you take your aim, 
         // fire away, fire awayyyy.
         //RaycastHit wallBounce = Physics.Raycast()
-
-
     }
 
-    public void OnCollisionEnter(Collider _collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if (_collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             tank.health -= 25;
             Destroy(gameObject);
