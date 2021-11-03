@@ -50,15 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a795060bba19384387a8abbc8fdb4c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  speed: 0
-  rotateSpeed: 1.45
+  tankSpeed: 4
+  rotateSpeed: 120
   bulletPrefab: {fileID: 1566346230363702630, guid: a2eeb5e9c48cd8e4c9f5be646551e87d, type: 3}
   turret: {fileID: 3257594837042743409}
-  rotateLeft: 113
-  rotateRight: 101
-  shoot: 32
+  cannon: {fileID: 3257594838409146557}
+  health: 100
+  healthSlider: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!54 &3257594836856228091
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -90,7 +89,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: a803c08e2dae47b41a212f537251a65e
+  m_AssetId: fabb5a45814408747856bc8438de2b14
   hasSpawned: 0
 --- !u!114 &-3053529789545697561
 MonoBehaviour:
