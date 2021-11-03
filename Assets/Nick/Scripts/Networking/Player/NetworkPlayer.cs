@@ -5,7 +5,7 @@ using Mirror;
 
 using System;
 
-[RequireComponent(typeof(TankTEst))]
+[RequireComponent(typeof(Tank))]
 public class NetworkPlayer : NetworkBehaviour
 {
     //SyncVar
