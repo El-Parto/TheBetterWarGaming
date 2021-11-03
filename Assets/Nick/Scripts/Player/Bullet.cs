@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float travelSpeed;// currently set to 1.46f
+    public float travelSpeed = 3.46f;// currently set to 1.46f
 
     public Transform turret; // the game object that it will be fired from. or supposed to.
     //private GameObject kaboom; // this is for the explosion effect to be instantiated when the bullet destroys itself.
@@ -36,7 +36,7 @@ public class Bullet : MonoBehaviour
             //gameObject.transform.rotation = new Quaternion(0, turret.transform.localRotation.y, 0, 0);
         gameObject.transform.Translate( travelSpeed * Time.deltaTime, 0, 0/*,turret.transform*/);
         
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
         Destroy(gameObject);
     }
 
@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
         
     }
 
-    public void OnCollisionrEnter(Collider _collision)
+    public void OnCollisionEnter(Collider _collision)
     {
         if(_collision.CompareTag("Player"))
         {
