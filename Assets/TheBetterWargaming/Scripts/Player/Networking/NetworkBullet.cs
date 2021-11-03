@@ -30,7 +30,7 @@ public class NetworkBullet : NetworkBehaviour
     [ServerCallback]
     public void OnCollisionEnter(Collision other)
     {
-	    if(other.collider.CompareTag("Wall") ||(other.collider.CompareTag("Player")))
+	    if(other.collider.CompareTag("Wall"))
 	    {
 		    Destroy(gameObject);
 	    }

@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class TankTEst : MonoBehaviour
 {
 
-    public float tankSpeed = 7.00f; // with current scale in mind, current speed = 0.01f
-    public float rotateSpeed = 8.45f; // current rotate speed is 1.45f;
+    public float tankSpeed = 2.50f; // Movement speed of tank. Only inspector value is loaded on runtime
+    public float rotateSpeed = 215; // Rotation based on degrees per second. currently set to 145.
 
     [SerializeField]private GameObject bulletPrefab; // object instantiated when firing
 
@@ -18,7 +18,7 @@ public class TankTEst : MonoBehaviour
     public Transform cannon;
 
     public float health = 100;
-    public Slider healthSlider;
+    public Slider healthSlider; 
 
     public Rigidbody rb;
   
