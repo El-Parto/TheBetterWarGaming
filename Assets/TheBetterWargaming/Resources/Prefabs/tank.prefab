@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a795060bba19384387a8abbc8fdb4c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankSpeed: 0.007
-  rotateSpeed: 1.45
+  tankSpeed: 4
+  rotateSpeed: 120
   bulletPrefab: {fileID: 1566346230363702630, guid: a2eeb5e9c48cd8e4c9f5be646551e87d, type: 3}
   turret: {fileID: 3257594837042743409}
   cannon: {fileID: 3257594838409146557}

@@ -25,9 +25,9 @@ public class NetworkPlayer : NetworkBehaviour
     
     public void Update()
     {
-        if(hasAuthority)
+        if(isLocalPlayer)
         {
-            if(Input.GetKeyDown(KeyCode.Space) && ammo != 0)
+            if(Input.GetKeyDown(KeyCode.Space) && ammo > 0)
             {
                 {
                     ammo -= 1;
@@ -65,7 +65,9 @@ public class NetworkPlayer : NetworkBehaviour
     [Command]
     public void CmdFireBulletPrefab()
     {
-        RpcFireBulletPrefab();
+        GameObject newBullet = (Instantiate(bulletPrefab, cannon));
+        NetworkServer.Spawn(newBullet);
+        RpcFireBulletPrefab(newBullet);
     }
 
     [ServerCallback]
@@ -84,11 +86,9 @@ public class NetworkPlayer : NetworkBehaviour
         
     }
     [ClientRpc]
-    public void RpcFireBulletPrefab()
+    public void RpcFireBulletPrefab(GameObject _bullet)
     {
-        GameObject newBullet = (Instantiate(bulletPrefab, cannon));
-        newBullet.transform.SetParent(null, true);
-        NetworkServer.Spawn(newBullet);
+        _bullet.transform.SetParent(null, true);
         
        
             
