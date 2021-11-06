@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/Menu.unity
     guid: 47474ce99dd36c146ab2f4b3d7737016
   - enabled: 1
-    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/OfflineTest.unity
+    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/Lobby.unity
     guid: d623d55f4958000459b1e3d147002fe7
   - enabled: 1
-    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/OnlineTest.unity
+    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/Game.unity
     guid: ad71288c9d8af4b4da3958b67b15902b
   m_configObjects: {}
