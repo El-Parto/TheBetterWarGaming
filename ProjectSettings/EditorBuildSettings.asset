@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Nick/Scenes/Menu.unity
-    guid: 41f21763fce0c68449b370032cd214fa
+    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/Menu.unity
+    guid: 47474ce99dd36c146ab2f4b3d7737016
   - enabled: 1
-    path: Assets/Nick/Scenes/Lobby.unity
-    guid: c3215c2d24fcc2640ae9dac89b382374
+    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/OfflineTest.unity
+    guid: d623d55f4958000459b1e3d147002fe7
   - enabled: 1
-    path: Assets/Nick/Scenes/Game.unity
-    guid: 7ffaa9051375806458594eb4ba9e1fe6
+    path: Assets/TheBetterWargaming/Scenes/NetworkingScenes/OnlineTest.unity
+    guid: ad71288c9d8af4b4da3958b67b15902b
   m_configObjects: {}
