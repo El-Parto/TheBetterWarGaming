@@ -21,6 +21,8 @@ public class TankTEst : MonoBehaviour
     public Slider healthSlider; 
 
     public Rigidbody rb;
+
+    [SerializeField] AudioClip swivelSound;
   
     // Start is called before the first frame update
     void Start()
@@ -45,9 +47,17 @@ public class TankTEst : MonoBehaviour
     private void RotateTurret()
     {
         if(Input.GetKeyDown(KeyCode.Q)||Input.GetKey(KeyCode.Q))
+        {
             turret.transform.Rotate(0,rotateSpeed*-1 * Time.deltaTime,0);
+            SoundManager.Instance.PlaySound(swivelSound);
+        }
+
         if(Input.GetKeyDown(KeyCode.E)|| Input.GetKey(KeyCode.E))
+        {
             turret.transform.Rotate(0,rotateSpeed * Time.deltaTime,0);
+            SoundManager.Instance.PlaySound(swivelSound);
+        }
+
     }
 /// <summary>
 /// When the player presses space, shoot the designated bullet prefab. Now handled on the Network Tank. or Networkplayer.
