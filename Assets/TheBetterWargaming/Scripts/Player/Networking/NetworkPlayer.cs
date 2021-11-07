@@ -17,6 +17,9 @@ public class NetworkPlayer : NetworkBehaviour
     [SyncVar] public bool canFire;
     [SyncVar] public float health = 100;
     //[SyncVar] public bool noAmmo = false;
+    [Header("Audio")]
+    [SerializeField] AudioClip shootSound;
+    [SerializeField] AudioClip engineSound;
     
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,7 @@ public class NetworkPlayer : NetworkBehaviour
                         ammo -= 1;
                         canFire = false;
                         CmdFireBulletPrefab();
-
+                        SoundManager.Instance.PlaySound(shootSound);
                     }
                 }
             }

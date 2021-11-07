@@ -12,10 +12,13 @@ public class Bullet : MonoBehaviour
 
     private Rigidbody brb;
     private TankTEst tank;
+
+    [SerializeField] AudioClip damageSound;
     
     // Start is called before the first frame update
     void Start()
     {
+
         // so the bullet appears at the cannon. OR is supposed to.
         gameObject.transform.position += new Vector3(0.055f,0,0);
 
@@ -37,6 +40,7 @@ public class Bullet : MonoBehaviour
         gameObject.transform.Translate( travelSpeed * Time.deltaTime, 0, 0/*,turret.transform*/);
         
         yield return new WaitForSeconds(4);
+        
         Destroy(gameObject);
     }
 
@@ -49,12 +53,20 @@ public class Bullet : MonoBehaviour
         
     }
 
-    public void OnCollisionEnter(Collider _collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if(_collision.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player"))
         {
             tank.health -= 25;
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            SoundManager.Instance.PlaySound(damageSound);
+            Destroy(gameObject);
+        }
+
+        
     }
 }

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   travelSpeed: 3.46
   turret: {fileID: 1168583393837005503, guid: 2387a2acb3acf3347b440892c21c6f1a, type: 3}
+  damageSound: {fileID: 8300000, guid: 9cfeb82ccaf1a45f2acf0e2104d14377, type: 3}
 --- !u!54 &4325105418206224498
 Rigidbody:
   m_ObjectHideFlags: 0
