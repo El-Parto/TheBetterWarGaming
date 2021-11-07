@@ -2619,8 +2619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 1336913232}
-  secondsLeft: 120
-  takingAway: 0
+  timeValue: 120
 --- !u!1 &728074678
 GameObject:
   m_ObjectHideFlags: 0
