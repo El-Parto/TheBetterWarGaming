@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     //private GameObject kaboom; // this is for the explosion effect to be instantiated when the bullet destroys itself.
 
     private Rigidbody brb;
-    private TankTEst tank;
+   // private TankTEst tank;
     
     // Start is called before the first frame update
     void Start()
@@ -49,11 +49,11 @@ public class Bullet : MonoBehaviour
         
     }
 
-    public void OnCollisionEnter(Collider _collision)
+    public void OnCollisionEnter(Collision _collision)
     {
-        if(_collision.CompareTag("Player"))
+        if(_collision.gameObject.CompareTag("Player"))
         {
-            tank.health -= 25;
+            
             Destroy(gameObject);
         }
     }

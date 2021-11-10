@@ -112,6 +112,12 @@ MonoBehaviour:
   fireTimer: 1
   canFire: 0
   health: 100
+  hpSlider: {fileID: 0}
+  hpSliders:
+  - {fileID: 3809063150560847932, guid: 2eb8496142c17194bb0117419e5c02cd, type: 3}
+  - {fileID: 3697951203733135486, guid: 635f75702cc0a684e8ef3026bfd9e2f1, type: 3}
+  isDead: 0
+  playerID: -1
 --- !u!114 &587306334819070533
 MonoBehaviour:
   m_ObjectHideFlags: 0

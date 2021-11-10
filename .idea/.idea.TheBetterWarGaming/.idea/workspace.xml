@@ -19,13 +19,14 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/NetworkPlayer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/HealthSetter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/Networking/NetworkPlayer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/CustomNetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/NetworkPlayer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/HealthUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/CustomNetworkManager1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/82EC470C-9131-4935-8AD0-C83AD628910C/bd/7d7264a6/Object.cs" root0="SKIP_HIGHLIGHTING" />
@@ -42,10 +43,11 @@
       <option value="$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/Networking/NetworkPlayer.cs" />
       <option value="$PROJECT_DIR$/Assets/Mirror/Runtime/NetworkManager.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" />
-      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkBullet.cs" />
-      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/HealthSetter.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1zj8uVQ3lRc3D5ZtqaLoabNAgQz" />
@@ -55,6 +57,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35010785" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -80,10 +84,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23784">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="23784" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -104,7 +108,8 @@
       <workItem from="1635289948546" duration="6853000" />
       <workItem from="1635585423512" duration="6487000" />
       <workItem from="1635841214220" duration="15680000" />
-      <workItem from="1635896674991" duration="5584000" />
+      <workItem from="1635896674991" duration="6995000" />
+      <workItem from="1636464006716" duration="19325000" />
     </task>
     <servers />
   </component>
@@ -113,7 +118,37 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/HealthSetter.cs</url>
+          <line>44</line>
+          <properties documentPath="C:\Users\Frank\Documents\GitHub\TheBetterWarGaming\Assets\TheBetterWargaming\Scripts\Player\Networking\HealthSetter.cs" initialLine="42" containingFunctionPresentation="method 'ServerGetPlayerList'">
+            <startOffsets>
+              <option value="1090" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1163" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
