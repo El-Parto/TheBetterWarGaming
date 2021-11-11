@@ -12,20 +12,23 @@ using UnityEngineInternal;
 [RequireComponent(typeof(TankTEst))]
 public class NetworkPlayer : NetworkBehaviour
 {
-    //SyncVar
+    //Tank mechanic variables
     public GameObject bulletPrefab; // the bullet GO the player fires
     public Transform cannon; // the turret the player fires from
     [SyncVar] public int ammo = 3; // how much ammo the player has
     [SyncVar] public float ammoTimer = 2; // how longe before you restock ammo.
     [SyncVar] public float fireTimer = 0.6f; // how long until you can fire next bullet
     [SyncVar] private bool canFire; // fire check
+    
+    //Health variables and sliders
     [SyncVar] public float health = 100;// health variable
     public Slider hpSlider; // the slider that the player gets wich is chosen based on the array of sliders below
-    public Slider[] hpSliders =  {};
+   // public Slider[] hpSliders =  {};
 
-    [SyncVar] public bool isDead = false;
+    [SyncVar] public bool isDead = false; // used to trigger set active to false;
     public SyncList<int> iDs = new SyncList<int>(); // this is the list used so that the player knows which slider to use.
     public int playerID = -1; // i'd like this to be the actual id of the player but....
+    [SerializeField] private bool isSet = false; // if this bool is true, it means the gui has been set (supposed to anyway)
     
     //[SyncVar] public bool noAmmo = false;
     
@@ -33,10 +36,16 @@ public class NetworkPlayer : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
 
-        playerID++;
-        HealthSetter setHealth= FindObjectOfType<HealthSetter>();
-        setHealth.playerList.Add(gameObject);
-        hpSlider = hpSliders[iDs[playerID]];
+        playerID++;// to set individual player ID's....don't think it's doing anything?
+        HealthSetter setHealth= FindObjectOfType<HealthSetter>();//  // gets healthsetter script so it can reference it below.
+        if(!isSet)
+        {
+            setHealth.playerList.Add(gameObject); // add gameobect to the synclist
+            setHealth.playerJoined = true; // activates boolean
+            hpSlider = setHealth.playerHpSliders[iDs[playerID]]; // slider is now whatever the slider array is.    
+            isSet = true;
+        }
+        
 
     }
 

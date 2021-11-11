@@ -46,8 +46,8 @@
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkBullet.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" />
-      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/HealthSetter.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1zj8uVQ3lRc3D5ZtqaLoabNAgQz" />
@@ -109,7 +109,7 @@
       <workItem from="1635585423512" duration="6487000" />
       <workItem from="1635841214220" duration="15680000" />
       <workItem from="1635896674991" duration="6995000" />
-      <workItem from="1636464006716" duration="19325000" />
+      <workItem from="1636464006716" duration="23803000" />
     </task>
     <servers />
   </component>
@@ -131,24 +131,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/HealthSetter.cs</url>
-          <line>44</line>
-          <properties documentPath="C:\Users\Frank\Documents\GitHub\TheBetterWarGaming\Assets\TheBetterWargaming\Scripts\Player\Networking\HealthSetter.cs" initialLine="42" containingFunctionPresentation="method 'ServerGetPlayerList'">
-            <startOffsets>
-              <option value="1090" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1163" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

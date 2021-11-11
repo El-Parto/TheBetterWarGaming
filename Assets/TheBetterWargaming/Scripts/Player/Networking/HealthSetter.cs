@@ -13,7 +13,8 @@ public class HealthSetter : NetworkBehaviour
     public Slider[] playerHpSliders = { };
     public Slider giveThisSliderTo;
     [SyncVar] public bool playerJoined = false;
-    
+
+    [SyncVar] public int playerNum = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,15 +24,17 @@ public class HealthSetter : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(playerJoined)
         {
             ServerGetPlayerList();
+            
         }        
     }
 
-    
 
-    [Server]
+
+    [ServerCallback]
     public void ServerGetPlayerList()
     {
 
