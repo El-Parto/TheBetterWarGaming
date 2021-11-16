@@ -23,7 +23,11 @@
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/Networking/NetworkPlayer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/CustomNetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/S2-2021-Networking-main/S2-2021-Networking-main/Assets/Networking Learning/Scripts/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9577AC7A-62EF-4317-9789-031239BA8798/4f/45648e1e/NullReferenceException.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9577AC7A-62EF-4317-9789-031239BA8798/23/158040c7/Environment.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/IDManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Unity/Hub/Editor/2020.2.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Slider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnityProjects/Networking/Assets/NetworkingLearn/Scripts/Networking/NetworkPlayer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" root0="FORCE_HIGHLIGHTING" />
@@ -44,8 +48,9 @@
       <option value="$PROJECT_DIR$/Assets/Mirror/Runtime/NetworkManager.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Turret.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkBullet.cs" />
-      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Bullet.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/TankTEst.cs" />
+      <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/IDManager.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/HealthSetter.cs" />
       <option value="$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs" />
     </changedPaths>
@@ -57,7 +62,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35010785" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35003254" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -84,10 +89,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23784">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="53584">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="23784" />
+      <option name="pid" value="53584" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -109,7 +114,9 @@
       <workItem from="1635585423512" duration="6487000" />
       <workItem from="1635841214220" duration="15680000" />
       <workItem from="1635896674991" duration="6995000" />
-      <workItem from="1636464006716" duration="23803000" />
+      <workItem from="1636464006716" duration="23808000" />
+      <workItem from="1636857623529" duration="3538000" />
+      <workItem from="1636970797159" duration="49640000" />
     </task>
     <servers />
   </component>
@@ -128,8 +135,41 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs</url>
+          <line>210</line>
+          <properties documentPath="C:\Users\Frank\Documents\GitHub\TheBetterWarGaming\Assets\TheBetterWargaming\Scripts\Player\Networking\NetworkPlayer.cs" initialLine="210" containingFunctionPresentation="method 'RpcSetHealthAmmo'">
+            <startOffsets>
+              <option value="5667" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5674" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/TheBetterWargaming/Scripts/Player/Networking/NetworkPlayer.cs</url>
+          <line>201</line>
+          <properties documentPath="C:\Users\Frank\Documents\GitHub\TheBetterWarGaming\Assets\TheBetterWargaming\Scripts\Player\Networking\NetworkPlayer.cs" initialLine="198" containingFunctionPresentation="method 'CmdSetHealthAmmo'">
+            <startOffsets>
+              <option value="5243" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5311" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
