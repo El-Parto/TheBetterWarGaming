@@ -44,8 +44,8 @@ public class NetworkPlayer : NetworkBehaviour
 
    
    [SyncVar] public bool canStartGame = false;
-   
-   
+
+   private bool hasSyncedPlayerList = true;
    
    // color stooof
    // material sync list here
@@ -107,6 +107,8 @@ public class NetworkPlayer : NetworkBehaviour
     { 
         
         cannon = GetComponentInChildren<Turret>().gameObject.transform;
+        playerList.Callback += OnPlayerListChanged;
+
         // if(isLocalPlayer)
         // {
         //     
@@ -124,8 +126,13 @@ public class NetworkPlayer : NetworkBehaviour
         //     hpSlider = setHealth.playerHpSliders[iDs[playerID]];
         // }
         //
-            
 
+
+    }
+
+    private void OnPlayerListChanged(SyncList<GameObject>.Operation _op, int _itemindex, GameObject _olditem, GameObject _newitem)
+    {
+        hasSyncedPlayerList = true;
     }
 
 
@@ -159,6 +166,8 @@ public class NetworkPlayer : NetworkBehaviour
                     }
                 }
             }
+            CmdSetHealthAmmo();
+            CmdCheckPlayerStatus();
         }
 
 
@@ -166,14 +175,17 @@ public class NetworkPlayer : NetworkBehaviour
         AmmoTeller();
        
 
-        CmdSetHealthAmmo();
-        CheckPlayerStatus();
         
         //Death mechanic
         
 
     }
-    
+
+    [Command]
+    public void CmdCheckPlayerStatus()
+    {
+        CheckPlayerStatus();
+    }
     
     // check if all players are ready
     [Server]
@@ -198,20 +210,28 @@ public class NetworkPlayer : NetworkBehaviour
     [Command]
     public void CmdSetHealthAmmo()
     {
+        if(!hasSyncedPlayerList)
+            return;
+        
         if(isLocalPlayer)
             playerList[0].GetComponent<NetworkPlayer>().hpSlider.value = health;
         RpcSetHealthAmmo();
     }
     [ClientRpc]
-    [CanBeNull]
     public void RpcSetHealthAmmo()
     {
-        IDManager idm = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
-        if(idm.playerCount >=2)
-            playerList[1].GetComponent<NetworkPlayer>().remotehpSliderP.value = playerList[1].GetComponent<NetworkPlayer>().health;
-            
-            
-
+        try
+        {
+            IDManager idm = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
+            if(idm.playerCount >= 2)
+                playerList[1].GetComponent<NetworkPlayer>().remotehpSliderP.value = playerList[1].GetComponent<NetworkPlayer>().health;
+        }
+        // Gotta Catch em all! - Pokemon
+        catch(Exception e)
+        {
+            // Debug.LogException(e, gameObject);
+            hasSyncedPlayerList = false;
+        }
     }
 
 
@@ -251,28 +271,55 @@ public class NetworkPlayer : NetworkBehaviour
     [Command]
     public void CmdServerGetPlayerList()
     {
-        RpcGetPlayerList();
+        if(hitpointSlider == null)
+        {
+            hitpointSlider = Instantiate(playerHpSliders[0], FindObjectOfType<Canvas>().transform, false).gameObject;
+            NetworkServer.Spawn(hitpointSlider);
+        }
 
+        if(remoteHitpointSlider == null)
+        {
+            remoteHitpointSlider = Instantiate(playerHpSliders[1], FindObjectOfType<Canvas>().transform, false).gameObject;
+            NetworkServer.Spawn(remoteHitpointSlider);
+        }
+
+        RpcGetPlayerList(hitpointSlider, remoteHitpointSlider);
     }
 
-        
 
+    private GameObject hitpointSlider;
+    private GameObject remoteHitpointSlider;
     
 
     [ClientRpc]
-    public void RpcGetPlayerList()
+    public void RpcGetPlayerList(GameObject _hitpointSlider, GameObject _remoteHitpointSlider)
     {
-        IDManager idm = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
-        GameObject hitpointSlider = Instantiate(playerHpSliders[0], GameObject.FindObjectOfType<Canvas>().transform, false).gameObject;
-        GameObject remoteHitpointSlider = Instantiate(playerHpSliders[1], GameObject.FindObjectOfType<Canvas>().transform, false).gameObject;
-        NetworkServer.Spawn(hitpointSlider);
-        NetworkServer.Spawn(remoteHitpointSlider);
-        if(idm.playerCount >= 2)
+        if(!hasSyncedPlayerList)
+            return;
+
+        try
         {
-            remotehpSliderP = remoteHitpointSlider.GetComponent<Slider>();
-            remotehpSliderP.value = playerList[1].GetComponent<NetworkPlayer>().health;
+            if(_hitpointSlider.transform.parent == null)
+                _hitpointSlider.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
+            
+            if(_remoteHitpointSlider.transform.parent == null)
+                _remoteHitpointSlider.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
+            
+            IDManager idm = FindObjectOfType<IDManager>();
+            
+            if(idm.playerCount >= 2)
+            {
+                remotehpSliderP = _remoteHitpointSlider.GetComponent<Slider>();
+                remotehpSliderP.value = playerList[1].GetComponent<NetworkPlayer>().health;
+            }
+            hpSlider = _hitpointSlider.GetComponent<Slider>();
         }
-        hpSlider = hitpointSlider.GetComponent<Slider>();
+        catch(Exception e)
+        {
+            // Debug.LogException(e, gameObject);
+            hasSyncedPlayerList = false;
+        }
+        
 
     }
     
