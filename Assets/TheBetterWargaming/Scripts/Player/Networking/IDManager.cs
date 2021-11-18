@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-
 using UnityEngine.UI;
 
 public class IDManager : NetworkBehaviour
 {
     [SyncVar] public int playerCount = 0;
     [SyncVar] public bool gameReady = false;
-
     [SyncVar] public bool gameActive = false;
     public SyncList<GameObject> playerList = new SyncList<GameObject>();
     // this script is to count the player so that the game knows when to start
@@ -20,7 +18,6 @@ public class IDManager : NetworkBehaviour
     // and because of this, 0 will be the number used to place it in the sync list
     // and 1 will be used for player 2 in the sync list.
 
-    // Update is called once per frame
     void Update()
     {
         // 
@@ -37,9 +34,6 @@ public class IDManager : NetworkBehaviour
     {
         Button button = GameObject.FindObjectOfType<Button>().GetComponent<Button>();
         button.gameObject.SetActive(false);
-        gameActive = true;
-        
+        gameActive = true;     
     } 
-    
-
 }
