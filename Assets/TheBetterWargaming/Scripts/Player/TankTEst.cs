@@ -14,12 +14,11 @@ public class TankTEst : MonoBehaviour
     [SerializeField]private GameObject bulletPrefab; // object instantiated when firing
 
     public GameObject turret;// object that is rotated via play control
+    private NetworkPlayer networkPlayer;
+    private IDManager idManager;
 
-    public Transform cannon;
-
-    public float health = 100;
-    public Slider healthSlider; 
-
+    public bool canMove;
+    
     public Rigidbody rb;
 
     [SerializeField] AudioClip swivelSound;
@@ -28,13 +27,19 @@ public class TankTEst : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        networkPlayer = gameObject.GetComponent<NetworkPlayer>();
+        idManager = FindObjectOfType<IDManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveTank();
-        RotateTurret();
+        if(idManager.gameActive)
+        {
+            MoveTank();
+            RotateTurret();
+        }
+        
         //Shoot();
     }
 
