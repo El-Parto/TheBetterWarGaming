@@ -8,7 +8,7 @@ namespace Networking
         CustomNetworkManager networkManager;
         public static MatchManager instance = null;
         [SyncVar(hook = nameof(OnReceivedMatchStarted))] public bool matchStarted = false;
-        [SerializeField] string[] maps;
+        [SerializeField] string[] maps; // the names of the map scenes
 
         void Awake()
         {
@@ -29,8 +29,10 @@ namespace Networking
 
         void ChooseRandomScene()
         {
-            int index = Random.Range(0, maps.Length);
-            networkManager.ServerChangeScene(maps[index]);
+            //int index = Random.Range(0, maps.Length);
+            //networkManager.ServerChangeScene(maps[index]);
+
+            networkManager.ServerChangeScene("map_Game");
         }
 
         [Server]

@@ -5,12 +5,12 @@ using UnityEngine;
 public class Obstacle : NetworkBehaviour
 {
     [SerializeField] float speed;
-    WinConditions winConditions;
+    WinCondition winConditions;
     ObstacleSpawner obstacleSpawner;
 
     void Awake()
     {
-        winConditions = FindObjectOfType<WinConditions>();
+        winConditions = FindObjectOfType<WinCondition>();
         obstacleSpawner = FindObjectOfType<ObstacleSpawner>();
     }
 

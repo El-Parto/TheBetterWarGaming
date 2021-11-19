@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class Countdown : MonoBehaviour
+public class Stopwatch : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] float timeValue = 120;

@@ -1,48 +1,37 @@
 using UnityEngine;
 using Mirror;
 using UnityEngine.SceneManagement;
-using System;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Networking
 {
     [RequireComponent(typeof(TankController))]
     public class NetworkPlayer : NetworkBehaviour
     {
+        #region Variables
+        UISpawner uiSpawner;
+        [Header("Setup")]
+        [SerializeField] GameObject bulletPrefab;
+        [SerializeField] Transform turret;                                                            
         [Header("Attributes")]
-        public GameObject bulletPrefab;                                                     // the bullet GO the player fires
-        public Transform cannon;                                                            // the turret the player fires from
-        [SyncVar] public int ammo = 3;                                                      // how much ammo the player has
-        [SyncVar] public float ammoTimer = 2;                                               // how longe before you restock ammo.
-        [SyncVar] public float fireTimer = 0.6f;                                            // how long until you can fire next bullet
-        [SyncVar] private bool canFire;                                                     // fire check
+        [SyncVar(hook = nameof(OnNameChanged))] public string playerName;
+        [SyncVar] public float tankHealth = 100;                                                
+        [SyncVar] public float timeUntilRestockAmmo = 2;                                               
+        [SyncVar] public float timeUntilNextFire = 0.6f;                                            
+        [SyncVar] public int ammoAmount = 3;                                                     
+        [SyncVar] public bool canFire;
+        GameObject[] players;
         [Header("UI")]
-        public SyncList<GameObject> playerList = new SyncList<GameObject>();
-        public Slider[] playerHpSliders = { };
-        public Slider giveThisSliderTo;                                                     //slider Cache
-        [SyncVar] public float health = 100;                                                // health variable
-        public Slider hpSlider;                                                             // the slider that the player gets wich is chosen based on the array of sliders below
-        public Slider remotehpSliderP;                                                      // the slider that the player gets wich is chosen based on the array of sliders below // public Slider[] hpSliders =  {};
-        [SyncVar] public bool playerJoined = false;
-        [SerializeField] private GameObject sliderObject;
-        public Slider[] playerAmmoSliders;
-        public Slider ammoSlider;
-        [Header("Player ID")]
-        private int pId;
-        [SyncVar] public bool canStartGame = false;
-        private bool hasSyncedPlayerList = true;
-        // color stooof
-        // material sync list here
-        // material cache here
-        // actual material here
-        [SyncVar] public bool isDead = false; // used to trigger set active to false;
-        // public int playerID = 0; // i'd like this to be the actual id of the player but....
-        [SerializeField] private bool isSet = false; // if this bool is true, it means the gui has been set (supposed to anyway)
-        //[SyncVar] public bool noAmmo = false;
+        [SerializeField] Slider healthSlider;
+        [SerializeField] Slider ammoSlider;
+        [SerializeField] TextMeshPro nameTag;
         [Header("Audio")]
-        [SerializeField] AudioClip shootSound;
-        [SerializeField] AudioClip engineSound;
+        [SerializeField] AudioClip shootSound, engineSound;
         Scene currentScene;
+        #endregion
+
+        #region Lobby
 
         #region Starting Game
         public void StartMatch()
@@ -93,404 +82,182 @@ namespace Networking
         }
 
         [Command]
-        public void CmdReturnToLobby()
-        {
-            CustomNetworkManager.Instance.ServerChangeScene("Lobby");
-        }
+        public void CmdReturnToLobby() => CustomNetworkManager.Instance.ServerChangeScene("Lobby");
         #endregion
- 
-        // Gets the player reference so that it may be spawned in correctly with it's component.
-        public override void OnStartClient()
-        {
-            CustomNetworkManager.AddPlayer(this);
 
-            //GetPlayerRef();
-            TankController playerTank = gameObject.GetComponent<TankController>();
-            playerTank.enabled = isLocalPlayer;
-            IDManager _id = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
+        #endregion
 
-            pId = _id.playerCount;
-            _id.playerCount++;
-        }
+        #region Overrides
 
         public override void OnStartLocalPlayer()
-        {
-            currentScene = SceneManager.GetActiveScene();
+        {           
             if (!currentScene.name.StartsWith("map")) SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
-
-            playerJoined = true;
-            // if we used Custom netowrk manager
-            // Add player here.
-            Addplayer();
-            CmdServerGetPlayerList();
+            turret = GetComponentInChildren<Turret>().transform;
+            string name = PlayerNameInput.DisplayName;
+            CmdPlayerName(name);
         }
+
+        // called when client or host connects
+        public override void OnStartClient() => CustomNetworkManager.AddPlayer(this);
 
         // called when client or host disconnects
         public override void OnStopClient() => CustomNetworkManager.RemovePlayer(this);
 
+        #endregion
 
-        [Server]
-        public void Addplayer() => playerList.Add(gameObject);
+        #region Setup
+
+        void Awake()
+        {
+            currentScene = SceneManager.GetActiveScene();
+            if (currentScene.name.StartsWith("map") && currentScene.name != "map_Results") uiSpawner = FindObjectOfType<UISpawner>();
+        }
 
         void Start()
         {
-            cannon = GetComponentInChildren<Turret>().gameObject.transform;
-            playerList.Callback += OnPlayerListChanged;
+            if (currentScene.name == "Lobby" || currentScene.name == "Empty" || currentScene.name == "map_Results")
+            {
+                UpdateCursor(CursorLockMode.None, true);
+                return;
+            }
 
-            // if(isLocalPlayer)
-            // {
-            //     
-            //         
-            //     
-            //    
-            //     //setHealth.playerList.Add(gameObject); // add gameobect to the synclist
-            //     // setHealth.playerJoined = true; // activates boolean
-            //     // hpSlider = setHealth.playerHpSliders[iDs[playerID]]; // slider is now whatever the slider array is.    
-            //     // isSet = true;
-            //     // playerID++;// to set individual player ID's....don't think it's doing anything?
-            // }
-            // else if(!isLocalPlayer)
-            // {
-            //     hpSlider = setHealth.playerHpSliders[iDs[playerID]];
-            // }
-            //
+            if (!isLocalPlayer) return;
+
+            SetupTankUI();
         }
 
-        private void OnPlayerListChanged(SyncList<GameObject>.Operation _op, int _itemindex, GameObject _olditem, GameObject _newitem) => hasSyncedPlayerList = true;
-
-        public void Update()
+        // health and ammo UI setup
+        void SetupTankUI()
         {
+            players = GameObject.FindGameObjectsWithTag("Player");
 
-            if (isLocalPlayer)
+            foreach (GameObject player in players)
             {
-
-
-                //hpSlider.value = health;
-                //ammoSlider.value = ammo;
-                if (health <= 0)
-                    isDead = true;
-                CmdOnDeath();
-                //testing health
-                if (Input.GetKeyDown(KeyCode.P))
+                if (isLocalPlayer)
                 {
-                    health -= 25;
+                    player.GetComponent<NetworkPlayer>().healthSlider = uiSpawner.tempSliders[uiSpawner.sliderCount].GetComponent<Slider>();
+                    uiSpawner.sliderCount += 1;
                 }
+            }
 
-                if (canFire)
+            //healthSlider1.GetComponent<Slider>().value = tankHealth;
+            //ammoSlider.GetComponent<Slider>().value = ammoAmount;
+        }
+
+        // player info sent to server, then server updates sync vars which handles it on all clients
+        [Command]
+        public void CmdPlayerName(string name)
+        {
+            playerName = name;
+        }
+
+        void OnNameChanged(string _old, string _new) => nameTag.text = playerName;
+
+        // updates cursor lockmode and visibility
+        void UpdateCursor(CursorLockMode mode, bool visible)
+        {
+            Cursor.lockState = mode;
+            Cursor.visible = visible;
+        }
+        #endregion
+
+        #region Operation
+
+        void Update()
+        {
+            if (currentScene.name == "Lobby" || currentScene.name == "Empty" || currentScene.name == "map_Results")
+            {
+                return;
+            }
+
+            if (!isLocalPlayer) return;
+
+            // health test
+            if (Input.GetKeyDown(KeyCode.P)) tankHealth -= 25;
+
+            if (canFire)
+            {
+                if (Input.GetKeyDown(KeyCode.Space) && ammoAmount > 0)
                 {
-                    if (Input.GetKeyDown(KeyCode.Space) && ammo > 0)
-                    {
-                        {
-                            ammo -= 1;
-                            canFire = false;
-                            CmdFireBulletPrefab();
-                            SoundManager.Instance.PlaySound(shootSound);
-                        }
-                    }
+                    ammoAmount -= 1;
+                    canFire = false;
+                    CmdFireBullet();
+                    SoundManager.Instance.PlaySound(shootSound);
                 }
-                CmdSetHealthAmmo();
-                CmdCheckPlayerStatus();
             }
             // Ammo +cooldown mechanic
             AmmoTeller();
-            //Death mechanic
+
+            CmdOnDeath(); 
         }
 
+        // if this player's health is 0, this player's GameObject is set to inactive
         [Command]
-        public void CmdCheckPlayerStatus() => CheckPlayerStatus();
-
-        // check if all players are ready
-        [Server]
-        public void CheckPlayerStatus()
+        public void CmdOnDeath()
         {
-            IDManager _id = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
-            if (_id.playerCount >= 2)
-            {
-                canStartGame = true;
-            }
-
-            if (canStartGame)
-            {
-                //please replace with actual bool check and things
-                Button startbutton = GameObject.FindObjectOfType<Button>().GetComponent<Button>();
-                startbutton.interactable = true;
-            }
+            if (tankHealth > 0) return;
+            gameObject.SetActive(false);
         }
 
+        // NetworkServer.Spawn needs to be called on the server
         [Command]
-        public void CmdSetHealthAmmo()
+        public void CmdFireBullet()
         {
-            if (!hasSyncedPlayerList)
-                return;
-
-            if (isLocalPlayer)
-                playerList[0].GetComponent<NetworkPlayer>().hpSlider.value = health;
-            RpcSetHealthAmmo();
+            GameObject bullet = Instantiate(bulletPrefab, turret);
+            NetworkServer.Spawn(bullet); 
+            RpcFireBullet(bullet);
         }
 
         [ClientRpc]
-        public void RpcSetHealthAmmo()
-        {
-            try
-            {
-                IDManager idm = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
-                if (idm.playerCount >= 2)
-                    playerList[1].GetComponent<NetworkPlayer>().remotehpSliderP.value = playerList[1].GetComponent<NetworkPlayer>().health;
-            }
-            // Gotta Catch em all! - Pokemon
-            catch (Exception e)
-            {
-                // Debug.LogException(e, gameObject);
-                hasSyncedPlayerList = false;
-            }
-        }
+        public void RpcFireBullet(GameObject _bullet) => _bullet.transform.SetParent(null, true);
 
-        [Command]
-        public void CmdOnDeath() => RpcOnDeath();
-
-        /// <summary>
-        /// Handles killing the player, it tells the server to destroy game object upon activating bool
-        /// it's a little wonky how i've written it with the is dead check
-        /// </summary>
-        [ClientRpc]
-        public void RpcOnDeath()
-        {
-            if (isDead)
-            {
-                if (health <= 0)
-                {
-                    gameObject.SetActive(false);
-                    // remove player command from here
-                    NetworkServer.Destroy(gameObject);
-                }
-            }
-        }
-
-        // public void OnHealthChange(float _old, float _new)
-        // {
-        //     hpSlider.value = health;
-        // }
-
-        [Command]
-        public void CmdServerGetPlayerList()
-        {
-            if (hitpointSlider == null)
-            {
-                hitpointSlider = Instantiate(playerHpSliders[0], FindObjectOfType<Canvas>().transform, false).gameObject;
-                NetworkServer.Spawn(hitpointSlider);
-            }
-
-            if (remoteHitpointSlider == null)
-            {
-                remoteHitpointSlider = Instantiate(playerHpSliders[1], FindObjectOfType<Canvas>().transform, false).gameObject;
-                NetworkServer.Spawn(remoteHitpointSlider);
-            }
-
-            RpcGetPlayerList(hitpointSlider, remoteHitpointSlider);
-        }
-
-        private GameObject hitpointSlider;
-        private GameObject remoteHitpointSlider;
-
-        [ClientRpc]
-        public void RpcGetPlayerList(GameObject _hitpointSlider, GameObject _remoteHitpointSlider)
-        {
-            if (!hasSyncedPlayerList)
-                return;
-
-            try
-            {
-                if (_hitpointSlider.transform.parent == null)
-                    _hitpointSlider.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
-
-                if (_remoteHitpointSlider.transform.parent == null)
-                    _remoteHitpointSlider.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
-
-                IDManager idm = FindObjectOfType<IDManager>();
-
-                if (idm.playerCount >= 2)
-                {
-                    remotehpSliderP = _remoteHitpointSlider.GetComponent<Slider>();
-                    remotehpSliderP.value = playerList[1].GetComponent<NetworkPlayer>().health;
-                }
-                hpSlider = _hitpointSlider.GetComponent<Slider>();
-            }
-            catch (Exception e)
-            {
-                // Debug.LogException(e, gameObject);
-                hasSyncedPlayerList = false;
-            }
-        }
-
-        // [ClientRpc]
-        //  public void RpcGetPlayerList(Slider _remoteSlider)
-        //  {
-        //      IDManager idm = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
-        //
-        //      
-        //
-        //
-        //      remotehpSliderP = remoteHitpointSlider.GetComponent<Slider>();
-        //      
-        //      if(isLocalPlayer )
-        //      {
-        //
-        //      // playerList[0].GetComponent<NetworkPlayer>().hpSlider = playerHpSliders[0];
-        //      // if(playerList[1] != null)
-        //      //     playerList[1].GetComponent<NetworkPlayer>().hpSlider = playerHpSliders[1];
-        //      // canStartGame 
-        //
-        //
-        //          //health slider
-        //
-        //          
-        //
-        //          // giveThisSliderTo = playerHpSliders[pId]; // this makes slider var = slider array[id] 
-        //          // playerList[pId].GetComponent<NetworkPlayer>().hpSlider = hitpointSlider.GetComponent<Slider>(); // gives slider var to network player.hpslider
-        //          // playerList[pId].GetComponent<NetworkPlayer>().hpSlider.value = playerList[pId].GetComponent<NetworkPlayer>().health;
-        //          // //NetworkServer.Spawn(sliderObject);
-        //          // playerList[pId].GetComponent<NetworkPlayer>().hpSlider.interactable = false;
-        //          //
-        //          //ammo slider
-        //          // giveThisSliderTo = playerAmmoSliders[i];
-        //          // playerList[i].GetComponent<NetworkPlayer>().ammoSlider = giveThisSliderTo; // gives slider var to network player.hpslider
-        //          //playerList[i].GetComponent<NetworkPlayer>().ammoSlider.interactable = false;
-        //
-        //      
-        //          
-        //          // Transform spawmpos = GameObject.FindObjectOfType<Canvas>().transform;
-        //          // GameObject ammoSliderOBJ = Instantiate(playerAmmoSliders[i], spawmpos, false).gameObject;
-        //          // NetworkServer.Spawn(ammoSliderOBJ);
-        //          //
-        //          // // tell sync list which slider to give them
-        //          // // tell unity that this is the synclist and slider.
-        //          // giveThisSliderTo = playerHpSliders[pId]; // this makes slider var = slider array[id] 
-        //          // playerList[pId].GetComponent<NetworkPlayer>().hpSlider = hitpointSlider.GetComponent<Slider>(); // gives slider var to network player.hpslider
-        //          // playerList[pId].GetComponent<NetworkPlayer>().hpSlider.value = playerList[pId].GetComponent<NetworkPlayer>().health;
-        //          // //NetworkServer.Spawn(sliderObject);
-        //          // playerList[pId].GetComponent<NetworkPlayer>().hpSlider.interactable = false;
-        //          //
-        //          // //ammo slider
-        //          // // giveThisSliderTo = playerAmmoSliders[i];
-        //          // // playerList[i].GetComponent<NetworkPlayer>().ammoSlider = giveThisSliderTo; // gives slider var to network player.hpslider
-        //          // //playerList[i].GetComponent<NetworkPlayer>().ammoSlider.interactable = false;
-        //          //
-        //          //
-        //          //
-        //          // // reset player joined bool so the loop doesn't reset.
-        //          if(playerList.Count >= 1)
-        //          {
-        //
-        //
-        //              canStartGame = true;
-        //             
-        //          }
-        //
-        //          //Debug.Log($"{playerList[pId]}");
-        //          
-        //      
-        //          // for some reason, upon getting the second player, the first value
-        //          // of playerlist is NULL.
-        //          playerJoined = false;
-        //      }
-        //
-        //  }
-
-
-
-        // only if we had a custom network manager
-        /*public override void OnStopClient()
-        {
-            // remove player here.
-        }*/
-
-        [Command]
-        public void CmdFireBulletPrefab()
-        {
-            GameObject newBullet = (Instantiate(bulletPrefab, cannon));
-            NetworkServer.Spawn(newBullet); // we don't add this to client rpc because NetworkServer.Spawn spawns on server and client rPC would also spawn the prefab causing double instantiation on the client.
-            RpcFireBulletPrefab(newBullet);
-        }
-
-        [ClientRpc]
-        public void RpcFireBulletPrefab(GameObject _bullet) => _bullet.transform.SetParent(null, true);
-
-        /// <summary>
-        /// When ammo is 0, count down the timer , once timer is 0, reset ammo and timer values.
-        /// Also holds the timer for controlling the speed of how fast your tank fires
-        /// </summary>
+        // When ammo is 0, count down the timer , once timer is 0, reset ammo and timer values.
+        // Also holds the timer for controlling the speed of how fast your tank fires
         public void AmmoTeller()
         {
             // if ammo is below 3, begin countdown till restocking ammo.
-            if (ammo <= 2)
+            if (ammoAmount <= 2)
             {
-                ammoTimer -= 1 * Time.deltaTime;
-                Debug.Log($"timer = {ammoTimer}");
+                timeUntilRestockAmmo -= 1 * Time.deltaTime;
+                Debug.Log($"timer = {timeUntilRestockAmmo}");
             }
 
             // if timer "expires" or hits 0 or below, add ammo. 
-            if (ammoTimer <= 0)
+            if (timeUntilRestockAmmo <= 0)
             {
-                ammo++;
-                ammoTimer = 2;
+                ammoAmount++;
+                timeUntilRestockAmmo = 2;
                 Debug.Log("Ammo refilled");
             }
 
             if (!canFire)
             {
-                fireTimer -= 1 * Time.deltaTime;
+                timeUntilNextFire -= 1 * Time.deltaTime;
             }
 
-            if (fireTimer <= 0)
+            if (timeUntilNextFire <= 0)
             {
                 canFire = true;
-                fireTimer = 0.6f;
+                timeUntilNextFire = 0.6f;
             }
         }
 
+        // server handles collision
         [ServerCallback]
-        public void OnCollisionEnter(Collision other)
+        void OnCollisionEnter(Collision other)
         {
+            // if bullet hits player
             if (other.collider.CompareTag("Bullet"))
             {
-                Rigidbody rbPlayer = gameObject.GetComponent<Rigidbody>();
-                rbPlayer.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-                health -= 25;
+                Rigidbody rb = GetComponent<Rigidbody>();
+                rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+                tankHealth -= 25;
                 Destroy(other.gameObject);
             }
 
-            if (other.collider.CompareTag("DeathZone"))
-            {
-                gameObject.transform.position = new Vector3(0, 3, 0);
-            }
+            if (other.collider.CompareTag("DeathZone")) gameObject.transform.position = new Vector3(0, 3, 0);
         }
 
-        /// <summary>
-        /// reduces the player count and removes from sync list.
-        /// </summary>
-        // public override void OnStopClient()
-        // {
-        //     IDManager id = GameObject.FindObjectOfType<IDManager>().GetComponent<IDManager>();
-        //     id.playerCount--;
-        //     
-        //     id.gameReady = false;
-        //     playerList.Remove(gameObject);
-        //     base.OnStopClient();
-        //     
-        // }
-
-        /*
-        public IEnumerator AmmoCooldown()
-        {
-            if(noAmmo)
-            {
-                yield return new WaitForSeconds(3);
-                ammo = 3;
-                noAmmo = false;
-
-            }
-
-        }
-    */
+        #endregion
     }
 }

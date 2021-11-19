@@ -77,7 +77,7 @@ namespace Networking
 		// called after ServerChangeScene() is run
         public override void OnServerSceneChanged(string sceneName)
         {
-			if (sceneName.StartsWith("map") && sceneName != "mode_Results")
+			if (sceneName.StartsWith("map") && sceneName != "map_Results")
             {
 				countdown = FindObjectOfType<Countdown>();				
 				StartCoroutine(countdown.CountingDown(3));

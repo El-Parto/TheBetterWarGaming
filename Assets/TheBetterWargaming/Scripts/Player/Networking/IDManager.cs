@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class IDManager : NetworkBehaviour
 {
+    /*
     [SyncVar] public int playerCount = 0;
     [SyncVar] public bool gameReady = false;
     [SyncVar] public bool gameActive = false;
@@ -35,5 +36,6 @@ public class IDManager : NetworkBehaviour
         Button button = GameObject.FindObjectOfType<Button>().GetComponent<Button>();
         button.gameObject.SetActive(false);
         gameActive = true;     
-    } 
+    }
+    */
 }
