@@ -16,6 +16,7 @@ namespace Networking
         [SerializeField] Transform turret;                                                            
         [Header("Attributes")]
         [SyncVar(hook = nameof(OnNameChanged))] public string playerName;
+        [SyncVar (hook = nameof(OnColourChange)), SerializeField] Color playerColour;
         [SyncVar] public float tankHealth = 100;                                                
         [SyncVar] public float timeUntilRestockAmmo = 2;                                               
         [SyncVar] public float timeUntilNextFire = 0.6f;                                            
@@ -26,6 +27,7 @@ namespace Networking
         [SerializeField] Slider healthSlider;
         [SerializeField] Slider ammoSlider;
         [SerializeField] TextMeshPro nameTag;
+        public Material tankMaterial; // so that the player may choose their colour based off of the colour of the image. Ideally controlled by 3 other sliders. 
         [Header("Audio")]
         [SerializeField] AudioClip shootSound, engineSound;
         Scene currentScene;
@@ -95,6 +97,9 @@ namespace Networking
             turret = GetComponentInChildren<Turret>().transform;
             string name = PlayerNameInput.DisplayName;
             CmdPlayerName(name);
+
+            Color _playerColour = new Color(ColourChangerUI.PlayerColour.r, ColourChangerUI.PlayerColour.g, ColourChangerUI.PlayerColour.b);
+            CmdPlayerColour(_playerColour);
         }
 
         // called when client or host connects
@@ -123,11 +128,11 @@ namespace Networking
 
             if (!isLocalPlayer) return;
 
-            SetupTankUI();
+           // SetupTankUI();
         }
 
-        // health and ammo UI setup
-        void SetupTankUI()
+        // health and ammo UI setup // now handled in "CmdPlayerColour".... err actually, you can just place the command here lol, i don't mind.
+        /*void SetupTankUI()
         {
             players = GameObject.FindGameObjectsWithTag("Player");
 
@@ -135,14 +140,16 @@ namespace Networking
             {
                 if (healthSlider == null)
                 {
-                    player.GetComponent<NetworkPlayer>().healthSlider = uiSpawner.tempSliders[uiSpawner.sliderCount].GetComponent<Slider>();
-                    uiSpawner.sliderCount += 1;
+                    //player.GetComponent<NetworkPlayer>().healthSlider = uiSpawner.tempSliders[uiSpawner.sliderCount].GetComponent<Slider>();
+                    //uiSpawner.sliderCount += 1;
+                    
+                    
                 }
             }
 
             //healthSlider1.GetComponent<Slider>().value = tankHealth;
             //ammoSlider.GetComponent<Slider>().value = ammoAmount;
-        }
+        }*/
 
         // player info sent to server, then server updates sync vars which handles it on all clients
         [Command]
@@ -152,6 +159,27 @@ namespace Networking
         }
 
         void OnNameChanged(string _old, string _new) => nameTag.text = playerName;
+
+
+
+        [Command]
+        void CmdPlayerColour(Color _playerColour)
+        {
+            
+            healthSlider = GetComponentInChildren<HealthUI>().gameObject.GetComponent<Slider>();// if you know a better way to get a specific game object slider  without "Find" feel free to change this. 
+            ammoSlider = GetComponentInChildren<AmmoUI>().gameObject.GetComponent<Slider>();
+            // ^actually...why is this here again?^ ...I'm sorry I got tired4 and placed it here Plz forgive me.
+            playerColour = _playerColour;
+        }
+
+        [Command]
+        void CmdAmmovisualiser()
+        {
+            
+        }
+
+        void OnColourChange(Color _old, Color _new) => tankMaterial.color = playerColour; // changes colour based on set image colour.
+
 
         // updates cursor lockmode and visibility
         void UpdateCursor(CursorLockMode mode, bool visible)
@@ -174,6 +202,10 @@ namespace Networking
 
             // health test
             if (Input.GetKeyDown(KeyCode.P)) tankHealth -= 25;
+            
+            
+            healthSlider.value = tankHealth; 
+            ammoSlider.value = ammoAmount;
 
             if (canFire)
             {
