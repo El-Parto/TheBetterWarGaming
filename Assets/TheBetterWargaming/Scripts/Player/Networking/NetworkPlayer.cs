@@ -133,7 +133,7 @@ namespace Networking
 
             foreach (GameObject player in players)
             {
-                if (isLocalPlayer)
+                if (healthSlider == null)
                 {
                     player.GetComponent<NetworkPlayer>().healthSlider = uiSpawner.tempSliders[uiSpawner.sliderCount].GetComponent<Slider>();
                     uiSpawner.sliderCount += 1;

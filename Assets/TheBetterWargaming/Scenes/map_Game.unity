@@ -3244,8 +3244,10 @@ MonoBehaviour:
   healthSlider1: {fileID: 8390492516750121168, guid: 2eb8496142c17194bb0117419e5c02cd, type: 3}
   healthSlider2: {fileID: 3691875572968716425, guid: 635f75702cc0a684e8ef3026bfd9e2f1, type: 3}
   canvasTransform: {fileID: 1926734300}
-  tempHealthSlider1: {fileID: 0}
-  tempHealthSlider2: {fileID: 0}
+  tempSliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  sliderCount: 0
 --- !u!4 &945659312
 Transform:
   m_ObjectHideFlags: 0

@@ -15,9 +15,6 @@ public class UISpawner : NetworkBehaviour
     [Server]
     void Awake()
     {
-        
-
-
         // spawn health sliders
         GameObject healthSlider1Instance = Instantiate(healthSlider1, canvasTransform);
         GameObject healthSlider2Instance = Instantiate(healthSlider2, canvasTransform);
@@ -25,7 +22,5 @@ public class UISpawner : NetworkBehaviour
         NetworkServer.Spawn(healthSlider2Instance);
         tempSliders[0] = healthSlider1Instance;
         tempSliders[1] = healthSlider2Instance;
-
-        // spawn ammo sliders
     }
 }
