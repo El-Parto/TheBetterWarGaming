@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6487594589657997834}
   - component: {fileID: -1936454494798064596}
   - component: {fileID: -7521323173801301214}
-  - component: {fileID: 5981845382968880527}
   - component: {fileID: 7145768897330830858}
+  - component: {fileID: 5981845382968880527}
   m_Layer: 0
   m_Name: BulletAshley
   m_TagString: Bullet
@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe63558f2b0dac040a1c554878c7cc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelSpeed: 3.46
+  speed: 3.46
+  bulletLifetime: 4
   turret: {fileID: 1168583393837005503, guid: 2387a2acb3acf3347b440892c21c6f1a, type: 3}
-  damageSound: {fileID: 8300000, guid: 9cfeb82ccaf1a45f2acf0e2104d14377, type: 3}
 --- !u!54 &4325105418206224498
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -140,20 +140,6 @@ MonoBehaviour:
     localScale: {x: 0, y: 0, z: 0}
     movementSpeed: 0
   target: {fileID: 5269615914175969867}
---- !u!114 &5981845382968880527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566346230363702630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a70fe744c418d64b861d39a5c5e078f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!114 &7145768897330830858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +180,20 @@ MonoBehaviour:
     localRotation: {x: 0, y: 0, z: 0, w: 0}
     localScale: {x: 0, y: 0, z: 0}
     movementSpeed: 0
+--- !u!114 &5981845382968880527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566346230363702630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a70fe744c418d64b861d39a5c5e078f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1001 &5668860660621598112
 PrefabInstance:
   m_ObjectHideFlags: 0

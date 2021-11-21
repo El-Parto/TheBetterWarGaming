@@ -10,17 +10,16 @@ namespace Networking
     public class NetworkPlayer : NetworkBehaviour
     {
         #region Variables
-        UISpawner uiSpawner;
         [Header("Setup")]
         [SerializeField] GameObject bulletPrefab;
         [SerializeField] Transform turret;                                                            
         [Header("Attributes")]
         [SyncVar(hook = nameof(OnNameChanged))] public string playerName;
         [SyncVar (hook = nameof(OnColourChange)), SerializeField] Color playerColour;
-        [SyncVar] public float tankHealth = 100;                                                
+        [SyncVar(hook = nameof(OnHealthChange))] public float tankHealth = 100;                                                
         [SyncVar] public float timeUntilRestockAmmo = 2;                                               
-        [SyncVar] public float timeUntilNextFire = 0.6f;                                            
-        [SyncVar] public int ammoAmount = 3;                                                     
+        [SyncVar] public float timeUntilNextFire = 0.6f;
+        [SyncVar(hook = nameof(OnAmmoChange))] public int ammoAmount = 3;                                                     
         [SyncVar] public bool canFire;
         GameObject[] players;
         [Header("UI")]
@@ -31,6 +30,7 @@ namespace Networking
         [Header("Audio")]
         [SerializeField] AudioClip shootSound, engineSound;
         Scene currentScene;
+        public static bool hasJoinedForFirstTime;
         #endregion
 
         #region Lobby
@@ -84,7 +84,17 @@ namespace Networking
         }
 
         [Command]
-        public void CmdReturnToLobby() => CustomNetworkManager.Instance.ServerChangeScene("Lobby");
+        public void CmdReturnToLobby()
+        {
+            CustomNetworkManager.Instance.ServerChangeScene("Empty");
+            RpcReturnToLobby();
+        }
+
+        [ClientRpc]
+        public void RpcReturnToLobby()
+        {
+            SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
+        }
         #endregion
 
         #endregion
@@ -92,100 +102,92 @@ namespace Networking
         #region Overrides
 
         public override void OnStartLocalPlayer()
-        {           
-            if (!currentScene.name.StartsWith("map")) SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
-            turret = GetComponentInChildren<Turret>().transform;
+        {
+            if (!hasJoinedForFirstTime) LoadLobbyAdditively();
+            SetupPlayer();
+        }
+
+        public void LoadLobbyAdditively()
+        {
+            SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
+            hasJoinedForFirstTime = true;
+        }
+
+        public void SetupPlayer()
+        {
             string name = PlayerNameInput.DisplayName;
-            CmdPlayerName(name);
+            CmdChangeName(name);
 
             Color _playerColour = new Color(ColourChangerUI.PlayerColour.r, ColourChangerUI.PlayerColour.g, ColourChangerUI.PlayerColour.b);
-            CmdPlayerColour(_playerColour);
+            CmdChangeColor(_playerColour);
         }
 
         // called when client or host connects
-        public override void OnStartClient() => CustomNetworkManager.AddPlayer(this);
+        public override void OnStartClient()
+        {
+            CustomNetworkManager.AddPlayer(this);
+        }
 
         // called when client or host disconnects
-        public override void OnStopClient() => CustomNetworkManager.RemovePlayer(this);
+        public override void OnStopClient()
+        {
+            CustomNetworkManager.RemovePlayer(this);
+        }
 
         #endregion
 
         #region Setup
 
-        void Awake()
-        {
-            currentScene = SceneManager.GetActiveScene();
-            if (currentScene.name.StartsWith("map") && currentScene.name != "map_Results") uiSpawner = FindObjectOfType<UISpawner>();
-        }
+        void Awake() => currentScene = SceneManager.GetActiveScene();
 
         void Start()
         {
-            if (currentScene.name == "Lobby" || currentScene.name == "Empty" || currentScene.name == "map_Results")
-            {
-                UpdateCursor(CursorLockMode.None, true);
-                return;
-            }
-
-            if (!isLocalPlayer) return;
-
-           // SetupTankUI();
+            if (!isLocalPlayer) return;            
+            SetupCursor();
+            CmdSetupSliders();
         }
 
-        // health and ammo UI setup // now handled in "CmdPlayerColour".... err actually, you can just place the command here lol, i don't mind.
-        /*void SetupTankUI()
+        // checks current scene to see if cursor needs to be locked or not
+        void SetupCursor()
         {
-            players = GameObject.FindGameObjectsWithTag("Player");
-
-            foreach (GameObject player in players)
-            {
-                if (healthSlider == null)
-                {
-                    //player.GetComponent<NetworkPlayer>().healthSlider = uiSpawner.tempSliders[uiSpawner.sliderCount].GetComponent<Slider>();
-                    //uiSpawner.sliderCount += 1;
-                    
-                    
-                }
-            }
-
-            //healthSlider1.GetComponent<Slider>().value = tankHealth;
-            //ammoSlider.GetComponent<Slider>().value = ammoAmount;
-        }*/
-
-        // player info sent to server, then server updates sync vars which handles it on all clients
-        [Command]
-        public void CmdPlayerName(string name)
-        {
-            playerName = name;
+            if (!currentScene.name.StartsWith("map")) UpdateCursor(CursorLockMode.None, true);
+            else UpdateCursor(CursorLockMode.Locked, false);
         }
-
-        void OnNameChanged(string _old, string _new) => nameTag.text = playerName;
-
-
-
-        [Command]
-        void CmdPlayerColour(Color _playerColour)
-        {
-            
-            healthSlider = GetComponentInChildren<HealthUI>().gameObject.GetComponent<Slider>();// if you know a better way to get a specific game object slider  without "Find" feel free to change this. 
-            ammoSlider = GetComponentInChildren<AmmoUI>().gameObject.GetComponent<Slider>();
-            // ^actually...why is this here again?^ ...I'm sorry I got tired4 and placed it here Plz forgive me.
-            playerColour = _playerColour;
-        }
-
-        [Command]
-        void CmdAmmovisualiser()
-        {
-            
-        }
-
-        void OnColourChange(Color _old, Color _new) => tankMaterial.color = playerColour; // changes colour based on set image colour.
-
 
         // updates cursor lockmode and visibility
-        void UpdateCursor(CursorLockMode mode, bool visible)
+        void UpdateCursor(CursorLockMode lockState, bool visiblity)
         {
-            Cursor.lockState = mode;
-            Cursor.visible = visible;
+            Cursor.lockState = lockState;
+            Cursor.visible = visiblity;
+        }
+
+        // player name setup
+        [Command]
+        public void CmdChangeName(string name) => playerName = name;
+        void OnNameChanged(string _old, string _new) => nameTag.text = playerName;
+
+        // player color setup
+        [Command]
+        void CmdChangeColor(Color color) => playerColour = color;
+        void OnColourChange(Color _old, Color _new) => tankMaterial.color = playerColour; 
+
+        [Command]
+        public void CmdSetupSliders()
+        {
+            healthSlider = GetComponentInChildren<HealthUI>().gameObject.GetComponent<Slider>();
+            ammoSlider = GetComponentInChildren<AmmoUI>().gameObject.GetComponent<Slider>();
+        }
+
+        void OnHealthChange(float _old, float _new)
+        {
+            tankHealth = _new;
+            healthSlider.value = tankHealth;
+        }
+
+        void OnAmmoChange(int _old, int _new)
+        {
+            ammoAmount = _new;
+            ammoSlider.value = ammoAmount;
         }
         #endregion
 
@@ -193,19 +195,7 @@ namespace Networking
 
         void Update()
         {
-            if (currentScene.name == "Lobby" || currentScene.name == "Empty" || currentScene.name == "map_Results")
-            {
-                return;
-            }
-
             if (!isLocalPlayer) return;
-
-            // health test
-            if (Input.GetKeyDown(KeyCode.P)) tankHealth -= 25;
-            
-            
-            healthSlider.value = tankHealth; 
-            ammoSlider.value = ammoAmount;
 
             if (canFire)
             {
@@ -219,16 +209,13 @@ namespace Networking
             }
             // Ammo +cooldown mechanic
             AmmoTeller();
-
-            CmdOnDeath(); 
+            CmdDeath();
         }
 
-        // if this player's health is 0, this player's GameObject is set to inactive
         [Command]
-        public void CmdOnDeath()
+        void CmdDeath()
         {
-            if (tankHealth > 0) return;
-            gameObject.SetActive(false);
+            if (tankHealth <= 0) gameObject.SetActive(false);
         }
 
         // NetworkServer.Spawn needs to be called on the server
@@ -283,8 +270,7 @@ namespace Networking
             {
                 Rigidbody rb = GetComponent<Rigidbody>();
                 rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-                tankHealth -= 25;
-                Destroy(other.gameObject);
+                tankHealth -= 25;              
             }
 
             if (other.collider.CompareTag("DeathZone")) gameObject.transform.position = new Vector3(0, 3, 0);

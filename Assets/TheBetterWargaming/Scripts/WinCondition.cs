@@ -22,7 +22,7 @@ namespace Networking
                     if (player.gameObject.activeInHierarchy)
                     {
                         winner = player.GetComponentInChildren<TextMeshPro>().text;
-                        CustomNetworkManager.Instance.ServerChangeScene("mode_Results");
+                        CustomNetworkManager.Instance.ServerChangeScene("map_Results");
                     }
                 }
             }
