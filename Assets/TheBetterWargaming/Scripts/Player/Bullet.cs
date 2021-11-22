@@ -12,9 +12,4 @@ public class Bullet : MonoBehaviour
     void MoveBullet() => transform.Translate(speed * Time.deltaTime, 0, 0);
 
     void DestroyBullet() => Destroy(gameObject);
-
-    void OnCollisionEnter(Collision _collision)
-    {
-        if (_collision.gameObject.CompareTag("Player")) DestroyBullet();
-    }
 }

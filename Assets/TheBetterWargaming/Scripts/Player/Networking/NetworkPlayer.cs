@@ -12,15 +12,18 @@ namespace Networking
         #region Variables
         [Header("Setup")]
         [SerializeField] GameObject bulletPrefab;
-        [SerializeField] Transform turret;                                                            
-        [Header("Attributes")]
+        [SerializeField] Transform turret;
+        [Header("SyncVars")]
         [SyncVar(hook = nameof(OnNameChanged))] public string playerName;
-        [SyncVar (hook = nameof(OnColourChange)), SerializeField] Color playerColour;
-        [SyncVar(hook = nameof(OnHealthChange))] public float tankHealth = 100;                                                
-        [SyncVar] public float timeUntilRestockAmmo = 2;                                               
+        [SyncVar(hook = nameof(OnColourChange))] public Color playerColour;
+        [SyncVar(hook = nameof(OnHealthChange))] public float playerHealth = 100;
+        [SyncVar(hook = nameof(OnAmmoChange))] public int playerAmmo = 3;
+        [SyncVar] public float timeUntilRestockAmmo = 2;
         [SyncVar] public float timeUntilNextFire = 0.6f;
-        [SyncVar(hook = nameof(OnAmmoChange))] public int ammoAmount = 3;                                                     
         [SyncVar] public bool canFire;
+        [SyncVar] public float bulletDamage = 25.0f;
+        [SyncVar] public float bulletLifetime = 4.0f;
+        [SyncVar] public float bulletSpeed = 5.0f;
         GameObject[] players;
         [Header("UI")]
         [SerializeField] Slider healthSlider;
@@ -30,7 +33,7 @@ namespace Networking
         [Header("Audio")]
         [SerializeField] AudioClip shootSound, engineSound;
         Scene currentScene;
-        public static bool hasJoinedForFirstTime;
+        public static bool hasJoinedBefore;
         #endregion
 
         #region Lobby
@@ -80,6 +83,7 @@ namespace Networking
         public void ReturnToLobby()
         {
             if (!isLocalPlayer) return;
+            RpcReturnToLobby();
             CmdReturnToLobby();
         }
 
@@ -87,7 +91,6 @@ namespace Networking
         public void CmdReturnToLobby()
         {
             CustomNetworkManager.Instance.ServerChangeScene("Empty");
-            RpcReturnToLobby();
         }
 
         [ClientRpc]
@@ -103,48 +106,43 @@ namespace Networking
 
         public override void OnStartLocalPlayer()
         {
-            if (!hasJoinedForFirstTime) LoadLobbyAdditively();
-            SetupPlayer();
-        }
+            currentScene = SceneManager.GetActiveScene();
+            if (!hasJoinedBefore) 
+            {
+                SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
+                hasJoinedBefore = true;
+            }
 
-        public void LoadLobbyAdditively()
-        {
-            SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
-            hasJoinedForFirstTime = true;
-        }
-
-        public void SetupPlayer()
-        {
+            // player name setup
             string name = PlayerNameInput.DisplayName;
             CmdChangeName(name);
 
-            Color _playerColour = new Color(ColourChangerUI.PlayerColour.r, ColourChangerUI.PlayerColour.g, ColourChangerUI.PlayerColour.b);
-            CmdChangeColor(_playerColour);
+            // player color setup
+            Color color = new Color(ColourChangerUI.PlayerColour.r, ColourChangerUI.PlayerColour.g, ColourChangerUI.PlayerColour.b);
+            CmdChangeColor(color);
         }
 
         // called when client or host connects
-        public override void OnStartClient()
-        {
-            CustomNetworkManager.AddPlayer(this);
-        }
+        public override void OnStartClient() => CustomNetworkManager.AddPlayer(this);
 
         // called when client or host disconnects
-        public override void OnStopClient()
-        {
-            CustomNetworkManager.RemovePlayer(this);
-        }
+        public override void OnStopClient() => CustomNetworkManager.RemovePlayer(this);
 
         #endregion
 
         #region Setup
 
-        void Awake() => currentScene = SceneManager.GetActiveScene();
+        void Awake()
+        {
+            currentScene = SceneManager.GetActiveScene();
+            healthSlider = GetComponentInChildren<HealthUI>().gameObject.GetComponent<Slider>();
+            ammoSlider = GetComponentInChildren<AmmoUI>().gameObject.GetComponent<Slider>();
+        }
 
         void Start()
         {
             if (!isLocalPlayer) return;            
-            SetupCursor();
-            CmdSetupSliders();
+            SetupCursor();         
         }
 
         // checks current scene to see if cursor needs to be locked or not
@@ -171,71 +169,71 @@ namespace Networking
         void CmdChangeColor(Color color) => playerColour = color;
         void OnColourChange(Color _old, Color _new) => tankMaterial.color = playerColour; 
 
-        [Command]
-        public void CmdSetupSliders()
-        {
-            healthSlider = GetComponentInChildren<HealthUI>().gameObject.GetComponent<Slider>();
-            ammoSlider = GetComponentInChildren<AmmoUI>().gameObject.GetComponent<Slider>();
-        }
-
         void OnHealthChange(float _old, float _new)
         {
-            tankHealth = _new;
-            healthSlider.value = tankHealth;
+            playerHealth = _new;
+            healthSlider.value = playerHealth;
+            CmdDeath();
         }
 
         void OnAmmoChange(int _old, int _new)
         {
-            ammoAmount = _new;
-            ammoSlider.value = ammoAmount;
+            playerAmmo = _new;
+            ammoSlider.value = playerAmmo;
         }
         #endregion
 
         #region Operation
 
+        [Client]
         void Update()
         {
             if (!isLocalPlayer) return;
 
             if (canFire)
             {
-                if (Input.GetKeyDown(KeyCode.Space) && ammoAmount > 0)
+                if (Input.GetKeyDown(KeyCode.Space) && playerAmmo > 0)
                 {
-                    ammoAmount -= 1;
+                    playerAmmo -= 1;
                     canFire = false;
-                    CmdFireBullet();
+                    CmdShoot();
                     SoundManager.Instance.PlaySound(shootSound);
                 }
             }
-            // Ammo +cooldown mechanic
+
             AmmoTeller();
-            CmdDeath();
         }
 
+        // checks player health on server
         [Command]
         void CmdDeath()
         {
-            if (tankHealth <= 0) gameObject.SetActive(false);
+            if (playerHealth <= 0) RpcDeath();
         }
 
-        // NetworkServer.Spawn needs to be called on the server
+        // disables player for all observers
+        [ClientRpc]
+        void RpcDeath()
+        {
+            gameObject.SetActive(false);
+            // add explosion particles
+        }
+
         [Command]
-        public void CmdFireBullet()
+        public void CmdShoot()
         {
             GameObject bullet = Instantiate(bulletPrefab, turret);
-            NetworkServer.Spawn(bullet); 
-            RpcFireBullet(bullet);
+            bullet.transform.SetParent(null, true);
+            bullet.GetComponent<Rigidbody>().velocity = turret.transform.right * bulletSpeed;
+            NetworkServer.Spawn(bullet);
         }
-
-        [ClientRpc]
-        public void RpcFireBullet(GameObject _bullet) => _bullet.transform.SetParent(null, true);
 
         // When ammo is 0, count down the timer , once timer is 0, reset ammo and timer values.
         // Also holds the timer for controlling the speed of how fast your tank fires
         public void AmmoTeller()
         {
             // if ammo is below 3, begin countdown till restocking ammo.
-            if (ammoAmount <= 2)
+            if (playerAmmo <= 2)
             {
                 timeUntilRestockAmmo -= 1 * Time.deltaTime;
                 Debug.Log($"timer = {timeUntilRestockAmmo}");
@@ -244,7 +242,7 @@ namespace Networking
             // if timer "expires" or hits 0 or below, add ammo. 
             if (timeUntilRestockAmmo <= 0)
             {
-                ammoAmount++;
+                playerAmmo++;
                 timeUntilRestockAmmo = 2;
                 Debug.Log("Ammo refilled");
             }
@@ -262,20 +260,18 @@ namespace Networking
         }
 
         // server handles collision
-        [ServerCallback]
+        [Client]
         void OnCollisionEnter(Collision other)
         {
             // if bullet hits player
             if (other.collider.CompareTag("Bullet"))
             {
-                Rigidbody rb = GetComponent<Rigidbody>();
-                rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-                tankHealth -= 25;              
+                playerHealth -= bulletDamage;
+                Destroy(other.gameObject);
             }
 
             if (other.collider.CompareTag("DeathZone")) gameObject.transform.position = new Vector3(0, 3, 0);
         }
-
         #endregion
     }
 }

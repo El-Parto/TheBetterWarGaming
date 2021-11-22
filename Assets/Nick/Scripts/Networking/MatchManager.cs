@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Networking
 {
@@ -9,6 +10,7 @@ namespace Networking
         public static MatchManager instance = null;
         [SyncVar(hook = nameof(OnReceivedMatchStarted))] public bool matchStarted = false;
         [SerializeField] string[] maps; // the names of the map scenes
+        public static bool isTimerEnabled = true;
 
         void Awake()
         {

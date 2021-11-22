@@ -8,6 +8,7 @@ namespace Networking
     public class Lobby : NetworkBehaviour
     {
         [SerializeField] Button startButton, readyButton, leaveButton;
+        [SerializeField] Toggle timerToggle;
 
         // only the host can interact with certain GUI elements
         void Awake() => startButton.gameObject.SetActive(CustomNetworkManager.Instance.IsHost);
@@ -28,6 +29,12 @@ namespace Networking
         {
             NetworkPlayer localPlayer = CustomNetworkManager.LocalPlayer;
             localPlayer.Ready();
+        }
+
+        public void OnClickTimerToggle(bool value)
+        {
+            if (!MatchManager.isTimerEnabled) MatchManager.isTimerEnabled = value;
+            else if (MatchManager.isTimerEnabled) MatchManager.isTimerEnabled = value;
         }
     } 
 }

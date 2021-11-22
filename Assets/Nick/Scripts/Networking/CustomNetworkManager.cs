@@ -11,6 +11,7 @@ namespace Networking
 		public bool canMove;
 		[SerializeField] GameObject matchManager;
 		Countdown countdown;
+		NetworkPlayer networkPlayer;
 
 		// A reference to the CustomNetworkManager version of the singleton. 
 		public static CustomNetworkManager Instance => singleton as CustomNetworkManager;
@@ -84,5 +85,7 @@ namespace Networking
             }
             base.OnServerSceneChanged(sceneName);
         }
-    }
+
+
+	}
 }
