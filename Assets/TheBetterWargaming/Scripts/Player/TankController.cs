@@ -29,8 +29,8 @@ namespace Networking
         // rotates turret clockwise or counter clockwise
         void RotateTurret()
         {
-            if (Input.GetKeyDown(KeyCode.Q) || Input.GetKey(KeyCode.Q)) turret.transform.Rotate(0, rotateSpeed * -1 * Time.deltaTime, 0);
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetKey(KeyCode.E)) turret.transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
+            if (Input.GetKeyDown(KeyCode.Q) || Input.GetKey(KeyCode.Q)) turret.transform.Rotate(0, 0, rotateSpeed * -1 * Time.deltaTime);
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKey(KeyCode.E)) turret.transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
         }
     } 
 }

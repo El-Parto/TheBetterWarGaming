@@ -224,7 +224,7 @@ namespace Networking
         {
             GameObject bullet = Instantiate(bulletPrefab, turret);
             bullet.transform.SetParent(null, true);
-            bullet.GetComponent<Rigidbody>().velocity = turret.transform.right * bulletSpeed;
+            bullet.GetComponent<Rigidbody>().velocity = turret.transform.forward * bulletSpeed;
             NetworkServer.Spawn(bullet);
         }
 
