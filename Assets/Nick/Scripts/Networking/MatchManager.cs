@@ -11,6 +11,7 @@ namespace Networking
         [SyncVar(hook = nameof(OnReceivedMatchStarted))] public bool matchStarted = false;
         [SerializeField] string[] maps; // the names of the map scenes
         public static bool isTimerEnabled = true;
+        [SyncVar] public bool timerEnabled;
 
         void Awake()
         {
@@ -21,6 +22,7 @@ namespace Networking
                 return;
             }
 
+            timerEnabled = isTimerEnabled;
             networkManager = CustomNetworkManager.Instance;
         }
 
@@ -38,6 +40,9 @@ namespace Networking
         }
 
         [Server]
-        public void StartMatch() => matchStarted = true;
+        public void StartMatch()
+        {
+            matchStarted = true;
+        }
     } 
 }

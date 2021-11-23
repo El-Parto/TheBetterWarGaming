@@ -142,7 +142,7 @@ namespace Networking
         void Start()
         {
             if (!isLocalPlayer) return;            
-            SetupCursor();         
+            SetupCursor();
         }
 
         // checks current scene to see if cursor needs to be locked or not

@@ -11,7 +11,11 @@ namespace Networking
         [SerializeField] Toggle timerToggle;
 
         // only the host can interact with certain GUI elements
-        void Awake() => startButton.gameObject.SetActive(CustomNetworkManager.Instance.IsHost);
+        void Awake()
+        {
+            startButton.gameObject.SetActive(CustomNetworkManager.Instance.IsHost);
+            timerToggle.gameObject.SetActive(CustomNetworkManager.Instance.IsHost);
+        }
 
         public void OnClickStartMatch()
         {

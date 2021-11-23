@@ -1,16 +1,30 @@
 using UnityEngine;
 using TMPro;
+using Mirror;
 
 namespace Networking
 {
-    public class Stopwatch : MonoBehaviour
+    public class Stopwatch : NetworkBehaviour
     {
+        public GameObject watch;
         [SerializeField] TextMeshProUGUI timeText;
         [SerializeField] float timeValue = 120;
 
-        void Update()
+        void Start()
         {
-            if (!MatchManager.isTimerEnabled) return;
+            if (MatchManager.instance.timerEnabled) return;
+            Invoke("RpcDisableStopwatch", 0.5f);
+        }
+
+        [ClientRpc]
+        public void RpcDisableStopwatch()
+        {
+            watch.SetActive(false);
+        }
+
+        void Update()
+        {         
+            if (!MatchManager.instance.timerEnabled) return;
 
             Timer();
             DisplayTime(timeValue);

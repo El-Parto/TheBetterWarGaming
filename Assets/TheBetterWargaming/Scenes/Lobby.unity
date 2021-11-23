@@ -1741,7 +1741,7 @@ MonoBehaviour:
   startButton: {fileID: 2007547331804440812}
   readyButton: {fileID: 2746842207764425846}
   leaveButton: {fileID: 8863828635547122365}
-  timerToggle: {fileID: 0}
+  timerToggle: {fileID: 1532867220}
 --- !u!114 &8168902685685615225
 MonoBehaviour:
   m_ObjectHideFlags: 0
