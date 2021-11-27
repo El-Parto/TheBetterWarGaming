@@ -34,6 +34,7 @@ namespace Networking
         [SerializeField] AudioClip shootSound, engineSound;
         Scene currentScene;
         public static bool hasJoinedBefore;
+        GameObject tempObject;
         #endregion
 
         #region Lobby
@@ -236,7 +237,7 @@ namespace Networking
             if (playerAmmo <= 2)
             {
                 timeUntilRestockAmmo -= 1 * Time.deltaTime;
-                Debug.Log($"timer = {timeUntilRestockAmmo}");
+                //Debug.Log($"timer = {timeUntilRestockAmmo}");
             }
 
             // if timer "expires" or hits 0 or below, add ammo. 
@@ -244,7 +245,7 @@ namespace Networking
             {
                 playerAmmo++;
                 timeUntilRestockAmmo = 2;
-                Debug.Log("Ammo refilled");
+                //Debug.Log("Ammo refilled");
             }
 
             if (!canFire)
@@ -260,14 +261,14 @@ namespace Networking
         }
 
         // server handles collision
-        [Client]
         void OnCollisionEnter(Collision other)
         {
             // if bullet hits player
             if (other.collider.CompareTag("Bullet"))
             {
                 playerHealth -= bulletDamage;
-                Destroy(other.gameObject);
+                tempObject = other.gameObject;
+                Destroy(tempObject.gameObject);
             }
 
             if (other.collider.CompareTag("DeathZone")) gameObject.transform.position = new Vector3(0, 3, 0);
