@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: -3053529789545697561}
   - component: {fileID: 3257594836856228093}
   - component: {fileID: 1501891823833465349}
+  - component: {fileID: 7256860562621428825}
   m_Layer: 0
   m_Name: tank
   m_TagString: Player
@@ -488,6 +489,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.1905854, y: 1.3617785, z: 2.2110314}
   m_Center: {x: -0.0647825, y: 0.7299187, z: -0.14077619}
+--- !u!114 &7256860562621428825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3257594836856228092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 1264072653553080523}
 --- !u!1 &3257594838409146556
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,6 +2767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4484175674461198913}
+  - component: {fileID: 1264072653553080523}
   m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
@@ -2774,6 +2792,25 @@ Transform:
   m_Father: {fileID: 4484175674461198887}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1264072653553080523
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4484175674461199088}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba40ccab537f4344d9e87e9133c70773, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4484175674461199089
 GameObject:
   m_ObjectHideFlags: 0

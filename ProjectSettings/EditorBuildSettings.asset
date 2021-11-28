@@ -20,10 +20,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TheBetterWargaming/Scenes/Results.unity
     guid: d9150dd70cf63aa418555521530a190b
-  - enabled: 1
-    path: Assets/TheBetterWargaming/Scenes/map_A.unity
-    guid: f6022da81dc4e404287b3194e4dc9789
-  - enabled: 1
-    path: Assets/TheBetterWargaming/Scenes/map_B.unity
-    guid: 3425933d913f14543a4c20d5c9bb4095
   m_configObjects: {}
